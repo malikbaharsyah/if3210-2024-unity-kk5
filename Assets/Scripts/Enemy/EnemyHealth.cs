@@ -58,6 +58,21 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    public void TakeDamageSword(int amount)
+    {
+        if (isDead)
+            return;
+
+        enemyAudio.Play();
+
+        currentHealth -= amount;
+
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
+    }
+
 
     void Death()
     {

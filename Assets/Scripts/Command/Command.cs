@@ -36,17 +36,16 @@ public class MoveCommand : Command
 public class ShootCommand : Command
 {
 
-    PlayerShooting playerShooting;
+    WeaponManager weapon;
 
-    public ShootCommand(PlayerShooting _playerShooting)
+    public ShootCommand(WeaponManager _weapon)
     {
-        playerShooting = _playerShooting;
+        weapon = _weapon;
     }
 
     public override void Execute()
     {
-        //Player menembak
-        playerShooting.Shoot();
+        weapon.Shoot();
     }
 
     public override void UnExecute()
