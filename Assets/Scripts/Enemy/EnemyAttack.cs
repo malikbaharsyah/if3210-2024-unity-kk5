@@ -41,10 +41,6 @@ public class EnemyAttack : MonoBehaviour
                 UnityEngine.Debug.LogError("Missing PetHealth component on pet object.");
             }
         }
-        else
-        {
-            UnityEngine.Debug.LogError("Pet object not found.");
-        }
 
         anim = GetComponent<Animator>();
         if (anim == null)
@@ -95,7 +91,7 @@ public class EnemyAttack : MonoBehaviour
             }
             else if (petInRange && petHealth != null && petHealth.currentHealth > 0)
             {
-                Attack(petHealth);
+                AttackPet();
             }
         }
 

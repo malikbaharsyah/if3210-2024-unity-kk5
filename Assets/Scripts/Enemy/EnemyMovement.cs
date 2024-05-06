@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
     Transform player;
     Transform pet;
+    GameObject playerPet;
     PlayerHealth playerHealth;
     PetHealth petHealth; // Updated to use PetHealth instead of PlayerHealth for pet
     EnemyHealth enemyHealth;
@@ -13,11 +14,6 @@ public class EnemyMovement : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        pet = GameObject.FindGameObjectWithTag("PlayerPet").transform;
-        if (pet != null)
-        {
-            petHealth = pet.GetComponent<PetHealth>();
-        }
         playerHealth = player.GetComponent<PlayerHealth>();
         enemyHealth = GetComponent<EnemyHealth>();
         nav = GetComponent<NavMeshAgent>();
@@ -25,7 +21,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        pet = GameObject.FindGameObjectWithTag("PlayerPet").transform;
+        pet = GameObject.FindGameObjectWithTag("PlayerPet") ? GameObject.FindGameObjectWithTag("PlayerPet").transform : null;
         if (pet != null)
         {
             petHealth = pet.GetComponent<PetHealth>();
@@ -56,11 +52,6 @@ public class EnemyMovement : MonoBehaviour
                 {
                     nav.SetDestination(pet.position);
                 }
-            }
-            else
-            {
-                // No valid target, disable navigation
-                nav.enabled = false;
             }
         }
         else
