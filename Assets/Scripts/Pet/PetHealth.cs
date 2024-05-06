@@ -35,15 +35,14 @@ public class PetHealth : MonoBehaviour
         StartSinking();
     }
 
-    public void StartSinking()
-    {
+    public void StartSinking() {
         GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         isSinking = true;
         Destroy(gameObject, 2f);
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount) 
     {
         if (isDead)
             return;
