@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using QFSW.QC;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -90,5 +91,16 @@ public class PlayerMovement : MonoBehaviour
         speed /= (1 + percentage);
         Debug.Log("Speed returned to " + speed);
     }
-    // Orb ini meningkatkan speed pemain sebesar 20 persen selama 15 detik. Jika pemain mengambil orb ini sebelum power up habis, maka waktu sisa power up akan menjadi 15 detik lagi dan power up speed pemain tetap 20 persen dari base speed.
+
+    public void SetDoubleSpeed()
+    {
+        speed *= 2;
+    }
+
+    [Command("x2")]
+    private void DoubleSpeed()
+    {
+        SetDoubleSpeed();
+        Debug.Log("Cheat Double Speed activated");
+    }
 }
