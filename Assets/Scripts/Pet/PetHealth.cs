@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QFSW.QC;
 
 public class PetHealth : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PetHealth : MonoBehaviour
     CapsuleCollider capsuleCollider;
     bool isDead;
     bool isSinking;
+    bool canTakeDamage = true;
 
     void Awake()
     {
@@ -44,6 +46,11 @@ public class PetHealth : MonoBehaviour
 
     public void TakeDamage(int amount) 
     {
+        if(!canTakeDamage)
+        {
+            return;
+        }
+
         if (isDead)
             return;
 
@@ -53,5 +60,17 @@ public class PetHealth : MonoBehaviour
         {
             Death();
         }
+    }
+
+    public void SetFullHealthPet()
+    {
+        canTakeDamage = !canTakeDamage;
+    }
+
+    [Command("fhpet")]
+    private void FullHealthPet()
+    {
+        SetFullHealthPet();
+        Debug.Log("Cheat Full Health Pet activated");
     }
 }
