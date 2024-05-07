@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using QFSW.QC;
 
 
 public class PlayerHealth : MonoBehaviour
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     bool isDead;
     bool damaged;
 
+    private bool canTakeDamage = true;
 
     void Awake()
     {
@@ -54,6 +56,10 @@ public class PlayerHealth : MonoBehaviour
     // Fungsi untuk mendapatkan damage
     public void TakeDamage(int amount)
     {
+        if (!canTakeDamage)
+        {
+            return;
+        }
         damaged = true;
 
         currentHealth -= amount;
@@ -97,5 +103,17 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(startingHealth, currentHealth + Mathf.RoundToInt(restoredHealth));
         healthSlider.value = currentHealth;
         Debug.Log("Player health restored from " + beforeHealth + " to " + currentHealth);
+    }
+
+    public void SetNoDamage()
+    {
+        canTakeDamage = !canTakeDamage;
+    }
+
+    [Command("NoDamage")]
+    private void NoDamage()
+    {
+        SetNoDamage();
+        Debug.Log("Cheat No Damage Activated");
     }
 }

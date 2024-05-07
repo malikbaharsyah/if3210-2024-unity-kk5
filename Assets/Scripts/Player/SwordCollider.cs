@@ -4,13 +4,11 @@ using UnityEngine;
 public class SwordCollider : MonoBehaviour
 {
     public int damage = 25;
-    private float _multiplier;
     private bool oneHit;
     public PlayerSwording playerSwording;
 
     private void Awake()
     {
-        _multiplier = 1;
         oneHit = false;
     }
 
@@ -28,8 +26,7 @@ public class SwordCollider : MonoBehaviour
                 }
                 else
                 {
-                    _multiplier = 1;
-                    enemyHealth.TakeDamageSword(Mathf.RoundToInt(damage * _multiplier));
+                    enemyHealth.TakeDamageSword(Mathf.RoundToInt(damage));
                 }
             }
         }
