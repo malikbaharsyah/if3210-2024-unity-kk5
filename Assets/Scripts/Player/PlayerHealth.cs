@@ -89,4 +89,13 @@ public class PlayerHealth : MonoBehaviour
         //meload ulang scene dengan index 0 pada build setting
         SceneManager.LoadScene(0);
     }
+
+    public void RestoreHealthByOrb(float percentage)
+    {   
+        int beforeHealth = currentHealth;
+        float restoredHealth = startingHealth * percentage;
+        currentHealth = Mathf.Min(startingHealth, currentHealth + Mathf.RoundToInt(restoredHealth));
+        healthSlider.value = currentHealth;
+        Debug.Log("Player health restored from " + beforeHealth + " to " + currentHealth);
+    }
 }

@@ -16,6 +16,7 @@ public class EnemyHealth : MonoBehaviour
     bool isDead;
     bool isSinking;
 
+    public GameObject[] orbPrefabs;
 
     void Awake()
     {
@@ -84,6 +85,7 @@ public class EnemyHealth : MonoBehaviour
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
+        SpawnOrb();
     }
 
 
@@ -97,5 +99,13 @@ public class EnemyHealth : MonoBehaviour
         isSinking = true;
         ScoreManager.score += scoreValue;
         Destroy(gameObject, 2f);
+    }
+
+    public void SpawnOrb()
+    {
+        int randomIndex = Random.Range(0, orbPrefabs.Length);
+        // postion collider y 0.35 agar diatas tanah
+        GameObject orb = Instantiate(orbPrefabs[randomIndex], new Vector3(transform.position.x, 0.35f, transform.position.z), Quaternion.identity);
+        orb.transform.SetParent(transform.parent);
     }
 }

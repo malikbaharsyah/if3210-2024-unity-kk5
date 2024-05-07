@@ -19,7 +19,8 @@ public class WeaponManager : MonoBehaviour
     public GameObject GalaxySword;
 	public bool canAttack = true;
 	public bool isAttacking = false;
-	public float attackCooldown = 0.5f;   
+	public float attackCooldown = 0.5f;
+    public int damageSword;
 
     // Weapon management
     int activeWeapon = 0; 
@@ -47,6 +48,7 @@ public class WeaponManager : MonoBehaviour
         Gun.SetActive(false);
         NovaGun.SetActive(false);
         GalaxySword.SetActive(true);
+        damageSword = GalaxySword.GetComponentInChildren<SwordCollider>().damage;
     }
 
     void Update()
@@ -83,6 +85,8 @@ public class WeaponManager : MonoBehaviour
             NovaGun.SetActive(false);
             GalaxySword.SetActive(true);
         }
+
+        // Cheat when press 4, 5, 6
 
         if (Input.GetButton("Fire1"))
         {
@@ -195,5 +199,20 @@ public class WeaponManager : MonoBehaviour
         GalaxySword.GetComponent<PlayerSwording>().SwordAttack();
     }
 
-    
+    public void IncreaseDamageByOrb(float percentage)
+    {   
+        Debug.Log("Damage increased terpanggil");
+
+        int maxDamageDefaultGun = Mathf.RoundToInt(2.5f * damagePerShot);
+        int maxDamageNovaGun = Mathf.RoundToInt(2.5f * shotgunDamagePerPellet);
+        int maxDamageSword = Mathf.RoundToInt(2.5f * damageSword);
+
+        damagePerShot = Mathf.Min(maxDamageDefaultGun, damagePerShot + Mathf.RoundToInt(percentage * damagePerShot));
+        shotgunDamagePerPellet = Mathf.Min(maxDamageNovaGun, shotgunDamagePerPellet + Mathf.RoundToInt(percentage * shotgunDamagePerPellet));
+        damageSword = Mathf.Min(maxDamageSword, damageSword + Mathf.RoundToInt(percentage * damageSword));
+
+        Debug.Log("Damage Default Gun increased to " + damagePerShot);
+        Debug.Log("Damage Shotgun increased to " + shotgunDamagePerPellet);
+        Debug.Log("Damage Sword increased to " + damageSword);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -75,4 +76,19 @@ public class PlayerMovement : MonoBehaviour
         bool walking = h != 0f || v != 0f;
         anim.SetBool("IsWalking", walking);
     }
+
+    public void IncreaseSpeedByOrb(float percentage, float duration)
+    {
+        StartCoroutine(IncreaseSpeed(percentage, duration));
+    }
+
+    IEnumerator IncreaseSpeed(float percentage, float duration)
+    {
+        Debug.Log("Speed increased from " + speed + " to " + speed * (1 + percentage) + " for " + duration + " seconds");
+        speed *= (1 + percentage);
+        yield return new WaitForSeconds(duration);
+        speed /= (1 + percentage);
+        Debug.Log("Speed returned to " + speed);
+    }
+    // Orb ini meningkatkan speed pemain sebesar 20 persen selama 15 detik. Jika pemain mengambil orb ini sebelum power up habis, maka waktu sisa power up akan menjadi 15 detik lagi dan power up speed pemain tetap 20 persen dari base speed.
 }

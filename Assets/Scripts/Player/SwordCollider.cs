@@ -16,12 +16,9 @@ public class SwordCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider objectCollider)
     {
-        Debug.Log("Masuk OnTriggerEnter");
         if (objectCollider.CompareTag("Enemy") && playerSwording.isAttacking)
         {
-            Debug.Log("Masuk OnTriggerEnter Enemy");
             var enemyHealth = objectCollider.GetComponent<EnemyHealth>();
-            Debug.Log("EnemyHealth: " + enemyHealth);
 
             if (enemyHealth)
             {
