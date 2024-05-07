@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using QFSW.QC;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -300,5 +301,20 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("Damage Default Gun increased to " + damagePerShot);
         Debug.Log("Damage Shotgun increased to " + shotgunDamagePerPellet);
         Debug.Log("Damage Sword increased to " + damageSword);
+    }
+
+    public void SetOneHitKill()
+    {
+        EnemyHealth enemyHealth = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyHealth>();
+        damagePerShot = enemyHealth.startingHealth;
+        shotgunDamagePerPellet = enemyHealth.startingHealth;
+        damageSword = enemyHealth.startingHealth;
+    }
+
+    [Command("1kill")]
+    private void OneHitKill()
+    {
+        SetOneHitKill();
+        Debug.Log("Cheat One Kill Activated");
     }
 }

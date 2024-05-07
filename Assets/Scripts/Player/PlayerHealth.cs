@@ -110,7 +110,7 @@ public class PlayerHealth : MonoBehaviour
         canTakeDamage = !canTakeDamage;
     }
 
-    [Command("NoDamage")]
+    [Command("nodamage")]
     private void NoDamage()
     {
         SetNoDamage();
