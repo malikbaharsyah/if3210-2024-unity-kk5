@@ -116,4 +116,12 @@ public class PlayerHealth : MonoBehaviour
         SetNoDamage();
         Debug.Log("Cheat No Damage Activated");
     }
+
+    [Command("orb")]
+    private void Orb()
+    {
+        RestoreHealthByOrb(0.2f);
+        weapon.IncreaseDamageByOrb(1.5f);
+        playerMovement.IncreaseSpeedByOrb(0.2f, 15f);
+    }
 }
