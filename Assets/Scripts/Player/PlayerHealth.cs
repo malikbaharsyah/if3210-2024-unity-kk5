@@ -122,6 +122,6 @@ public class PlayerHealth : MonoBehaviour
     {
         RestoreHealthByOrb(0.2f);
         weapon.IncreaseDamageByOrb(1.5f);
-        playerMovement.IncreaseSpeedByOrb(0.2f, 15f);
+        playerMovement.IncreaseSpeedByOrb();
     }
 }
