@@ -9,12 +9,12 @@ public class EnemyHealth : MonoBehaviour
     public AudioClip deathClip;
 
 
-    Animator anim;
-    AudioSource enemyAudio;
-    ParticleSystem hitParticles;
-    CapsuleCollider capsuleCollider;
-    bool isDead;
-    bool isSinking;
+    protected Animator anim;
+    protected AudioSource enemyAudio;
+    protected ParticleSystem hitParticles;
+    protected CapsuleCollider capsuleCollider;
+    protected bool isDead;
+    protected bool isSinking;
 
     public GameObject[] orbPrefabs;
 
@@ -75,7 +75,7 @@ public class EnemyHealth : MonoBehaviour
     }
 
 
-    void Death()
+    protected virtual void Death()
     {
         isDead = true;
 
