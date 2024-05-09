@@ -12,8 +12,8 @@ public class WeaponManager : MonoBehaviour
 
     // Shotgun
     public GameObject NovaGun;
-    public int shotgunDamagePerPellet = 20;
-    public float rangeNovaGun = 15f;
+    public int shotgunDamagePerPellet = 25;
+    public float rangeNovaGun = 10f;
     public float timeBetweenBulletsNovaGun = 0.5f;
 
     // Sword
@@ -275,41 +275,31 @@ public class WeaponManager : MonoBehaviour
     public void NovaShoot()
     {
         timer = 0f;
-
         novaGunAudio.Play();
 
-        //Play gun particle
         gunParticles.Stop();
         gunParticles.Play();
 
-        //enable Line renderer
         gunLine.enabled = true;
         gunLine.positionCount = 10;
 
-        //set shooting rays
         for (int i = 0; i < shootRaysNovaGun.Length; i++)
         {
             gunLine.SetPosition(2 * i, transform.position);
             shootRaysNovaGun[i].origin = transform.position;
             shootRaysNovaGun[i].direction = Quaternion.Euler(0, (-10 + i * 5), 0) * transform.forward;
-            //Lakukan raycast jika mendeteksi id nemy hit apapun
             if (Physics.Raycast(shootRaysNovaGun[i], out shootHit, range, shootableMask))
             {
-                //Lakukan raycast hit hace component Enemyhealth
                 EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
 
                 if (enemyHealth != null)
                 {
-                    //Lakukan Take Damage
                     enemyHealth.TakeDamage(damagePerShot, shootHit.point);
                 }
-
-                //Set line end position ke hit position
                 gunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
-                //set line end position ke range freom barrel
                 gunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * range);
             }
         }

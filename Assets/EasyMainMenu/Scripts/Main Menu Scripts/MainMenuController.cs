@@ -7,7 +7,7 @@ public class MainMenuController : MonoBehaviour {
 
     Animator anim;
 
-    public string newGameSceneName;
+    public int newGameScene;
     public int quickSaveSlotID;
 
     [Header("Options Panel")]
@@ -25,8 +25,6 @@ public class MainMenuController : MonoBehaviour {
         //new key
         PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
     }
-
-    #region Open Different panels
 
     public void openOptions()
     {
@@ -126,15 +124,9 @@ public class MainMenuController : MonoBehaviour {
 
     public void newGame()
     {
-        if (!string.IsNullOrEmpty(newGameSceneName))
-            SceneManager.LoadScene(newGameSceneName);
-        else
-            Debug.Log("Please write a scene name in the 'newGameSceneName' field of the Main Menu Script and don't forget to " +
-                "add that scene in the Build Settings!");
+        newGameScene = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(newGameScene);
     }
-    #endregion
-
-    #region Back Buttons
 
     public void back_options()
     {
@@ -162,18 +154,12 @@ public class MainMenuController : MonoBehaviour {
     {
         Application.Quit();
     }
-    #endregion
-
-    #region Sounds
     public void playHoverClip()
     {
-       
+
     }
 
     void playClickSound() {
 
     }
-
-
-    #endregion
 }
