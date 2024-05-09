@@ -6,15 +6,15 @@ public class EnemyAttack : MonoBehaviour
     public float timeBetweenAttacks = 0.5f;
     public int attackDamage = 10;
 
-    protected Animator anim;
-    protected GameObject player;
-    protected GameObject pet;
-    protected PlayerHealth playerHealth;
-    protected PetHealth petHealth;
-    protected EnemyHealth enemyHealth;
-    protected bool playerInRange;
+    Animator anim;
+    GameObject player;
+    GameObject pet;
+    PlayerHealth playerHealth;
+    PetHealth petHealth;
+    EnemyHealth enemyHealth;
+    bool playerInRange;
     bool petInRange;
-    protected float timer;
+    float timer;
 
     void Awake()
     {
@@ -67,7 +67,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    protected virtual void OnTriggerExit(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.gameObject == player && !other.isTrigger)
         {
@@ -79,7 +79,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    protected virtual void Update()
+    void Update()
     {
         timer += Time.deltaTime;
 
@@ -101,7 +101,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    protected virtual void Attack(PlayerHealth targetHealth)
+    void Attack(PlayerHealth targetHealth)
     {
         timer = 0f;
         if (targetHealth != null)

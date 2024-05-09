@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KerocoHealth : EnemyHealth
+public class KerocoHealth : BaseEnemyHealth
 {
     protected override void Death()
     {
