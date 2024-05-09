@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
     bool damaged;
 
     private bool canTakeDamage = true;
+    GameObject healEffect;
 
     void Awake()
     {
@@ -34,6 +35,9 @@ public class PlayerHealth : MonoBehaviour
 
         weapon = GetComponentInChildren<WeaponManager>();
         currentHealth = startingHealth;
+
+        healEffect = transform.Find("HealEffect").gameObject;
+        healEffect.SetActive(false);
     }
 
 
@@ -93,7 +97,7 @@ public class PlayerHealth : MonoBehaviour
     public void RestartLevel()
     {
         //meload ulang scene dengan index 0 pada build setting
-        SceneManager.LoadScene(0);
+     SceneManager.LoadScene(0);
     }
 
     public void RestoreHealthByOrb(float percentage)
@@ -103,6 +107,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Min(startingHealth, currentHealth + Mathf.RoundToInt(restoredHealth));
         healthSlider.value = currentHealth;
         Debug.Log("Player health restored from " + beforeHealth + " to " + currentHealth);
+        StartCoroutine(ActivateHealEffect());
     }
 
     public void SetNoDamage()
@@ -124,4 +129,24 @@ public class PlayerHealth : MonoBehaviour
         weapon.IncreaseDamageByOrb(1.5f);
         playerMovement.IncreaseSpeedByOrb();
     }
+    public void Heal(int amount)
+    {
+        int tempHealth = currentHealth + amount;
+
+        currentHealth = Mathf.Min(100, tempHealth);
+
+        healthSlider.value = currentHealth;
+
+        StartCoroutine(ActivateHealEffect());
+    }
+
+    IEnumerator ActivateHealEffect()
+    {
+        healEffect.SetActive(true);
+
+        yield return new WaitForSeconds(1);
+
+        healEffect.SetActive(false);
+    }
+
 }
