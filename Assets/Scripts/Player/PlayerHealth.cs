@@ -21,7 +21,7 @@ public class PlayerHealth : MonoBehaviour
     WeaponManager weapon;
     bool isDead;
     bool damaged;
-
+    GameObject healEffect;
 
     void Awake()
     {
@@ -32,6 +32,9 @@ public class PlayerHealth : MonoBehaviour
 
         weapon = GetComponentInChildren<WeaponManager>();
         currentHealth = startingHealth;
+
+        healEffect = transform.Find("HealEffect").gameObject;
+        healEffect.SetActive(false);
     }
 
 
@@ -89,4 +92,25 @@ public class PlayerHealth : MonoBehaviour
         //meload ulang scene dengan index 0 pada build setting
         SceneManager.LoadScene(0);
     }
+
+    public void Heal(int amount)
+    {
+        int tempHealth = currentHealth + amount;
+
+        currentHealth = Mathf.Min(100, tempHealth);
+
+        healthSlider.value = currentHealth;
+
+        StartCoroutine(ActivateHealEffect());
+    }
+
+    IEnumerator ActivateHealEffect()
+    {
+        healEffect.SetActive(true);
+
+        yield return new WaitForSeconds(1);
+
+        healEffect.SetActive(false);
+    }
+
 }
