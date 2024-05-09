@@ -26,32 +26,23 @@ public class WeaponManager : MonoBehaviour
     // Weapon management
     int activeWeapon = 0;
 
-    public GameObject NovaBarrelEnd1;
-    public GameObject NovaBarrelEnd2;
-    public GameObject NovaBarrelEnd3;
+    //public GameObject NovaBarrelEnd1;
+    //public GameObject NovaBarrelEnd2;
+    //public GameObject NovaBarrelEnd3;
 
     float timer;                                    
     Ray shootRay = new Ray();                                   
     RaycastHit shootHit;                            
     int shootableMask;
-    int shootableMaskNovaGun;
     ParticleSystem gunParticles;
-    ParticleSystem novaGunParticles1;
-    ParticleSystem novaGunParticles2;
-    ParticleSystem novaGunParticles3;
+    ParticleSystem novaGunParticles;
     LineRenderer gunLine;
-    LineRenderer novaGunLine1;
-    LineRenderer novaGunLine2;
-    LineRenderer novaGunLine3;                   
+    LineRenderer novaGunLine;                 
     AudioSource gunAudio; 
-    AudioSource novaGunAudio1;
-    AudioSource novaGunAudio2;
-    AudioSource novaGunAudio3;                          
-    Light gunLight;
-    Light novaGunLight1;
-    Light novaGunLight2;
-    Light novaGunLight3;                               
-    float effectsDisplayTime = 0.2f;      
+    public AudioSource novaGunAudio;                        
+    Light gunLight;                           
+    float effectsDisplayTime = 0.2f;
+    Ray[] shootRaysNovaGun = new Ray[5];
 
     void Awake()
     {
@@ -66,19 +57,19 @@ public class WeaponManager : MonoBehaviour
         Gun.SetActive(false);
         NovaGun.SetActive(false);
         GalaxySword.SetActive(false);
-        shootableMaskNovaGun = LayerMask.GetMask("Shootable");
-        novaGunParticles1 = NovaBarrelEnd1.GetComponent<ParticleSystem>();
-        novaGunParticles2 = NovaBarrelEnd2.GetComponent<ParticleSystem>();
-        novaGunParticles3 = NovaBarrelEnd3.GetComponent<ParticleSystem>();
-        novaGunLine1 = NovaBarrelEnd1.GetComponent<LineRenderer>();
-        novaGunLine2 = NovaBarrelEnd2.GetComponent<LineRenderer>();
-        novaGunLine3 = NovaBarrelEnd3.GetComponent<LineRenderer>();
-        novaGunAudio1 = NovaBarrelEnd1.GetComponent<AudioSource>();
-        novaGunAudio2 = NovaBarrelEnd2.GetComponent<AudioSource>();
-        novaGunAudio3 = NovaBarrelEnd3.GetComponent<AudioSource>();
-        novaGunLight1 = NovaBarrelEnd1.GetComponent<Light>();
-        novaGunLight2 = NovaBarrelEnd2.GetComponent<Light>();
-        novaGunLight3 = NovaBarrelEnd3.GetComponent<Light>();
+        // shootableMaskNovaGun = LayerMask.GetMask("Shootable");
+        // novaGunParticles1 = NovaBarrelEnd1.GetComponent<ParticleSystem>();
+        // novaGunParticles2 = NovaBarrelEnd2.GetComponent<ParticleSystem>();
+        // novaGunParticles3 = NovaBarrelEnd3.GetComponent<ParticleSystem>();
+        // novaGunLine1 = NovaBarrelEnd1.GetComponent<LineRenderer>();
+        // novaGunLine2 = NovaBarrelEnd2.GetComponent<LineRenderer>();
+        // novaGunLine3 = NovaBarrelEnd3.GetComponent<LineRenderer>();
+        // novaGunAudio1 = NovaBarrelEnd1.GetComponent<AudioSource>();
+        // novaGunAudio2 = NovaBarrelEnd2.GetComponent<AudioSource>();
+        // novaGunAudio3 = NovaBarrelEnd3.GetComponent<AudioSource>();
+        // novaGunLight1 = NovaBarrelEnd1.GetComponent<Light>();
+        // novaGunLight2 = NovaBarrelEnd2.GetComponent<Light>();
+        // novaGunLight3 = NovaBarrelEnd3.GetComponent<Light>();
         damageSword = GalaxySword.GetComponentInChildren<SwordCollider>().damage;
     }
 
@@ -126,21 +117,21 @@ public class WeaponManager : MonoBehaviour
         {
             DisableEffects();
         }
-        if (timer >= timeBetweenBulletsNovaGun * effectsDisplayTime)
-        {
-            DisableEffectsNovaGun();
-        }
+        //if (timer >= timeBetweenBulletsNovaGun * effectsDisplayTime)
+        //{
+        //    DisableEffectsNovaGun();
+        //}
     }
 
-    public void DisableEffectsNovaGun()
-    {
-        novaGunLine1.enabled = false;
-        novaGunLine2.enabled = false;
-        novaGunLine3.enabled = false;
-        novaGunLight1.enabled = false;
-        novaGunLight2.enabled = false;
-        novaGunLight3.enabled = false;
-    }
+    //public void DisableEffectsNovaGun()
+    //{
+    //    novaGunLine1.enabled = false;
+    //    novaGunLine2.enabled = false;
+    //    novaGunLine3.enabled = false;
+    //    novaGunLight1.enabled = false;
+    //    novaGunLight2.enabled = false;
+    //    novaGunLight3.enabled = false;
+    //}
 
     public void DisableEffects()
     {
@@ -201,82 +192,125 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    //public void NovaShoot()
+    //{
+    //    timer = 0f;
+
+    //    novaGunAudio1.Play();
+    //    novaGunAudio2.Play();
+    //    novaGunAudio3.Play();
+
+    //    novaGunLight1.enabled = true;
+    //    novaGunLight2.enabled = true;
+    //    novaGunLight3.enabled = true;
+
+    //    novaGunParticles1.Stop();
+    //    novaGunParticles2.Stop();
+    //    novaGunParticles3.Stop();
+    //    novaGunParticles1.Play();
+    //    novaGunParticles2.Play();
+    //    novaGunParticles3.Play();
+
+    //    novaGunLine1.enabled = true;
+    //    novaGunLine2.enabled = true;
+    //    novaGunLine3.enabled = true;
+
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        Vector3 direction = transform.forward;
+    //        direction += transform.up * Random.Range(-0.05f, 0.05f);
+    //        direction += transform.right * Random.Range(-0.05f, 0.05f);
+
+    //        shootRay.origin = transform.position;
+    //        shootRay.direction = direction;
+
+    //        if (Physics.Raycast(shootRay, out shootHit, rangeNovaGun, shootableMaskNovaGun))
+    //        {
+    //            EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+
+    //            if (enemyHealth != null)
+    //            {
+    //                float distance = Vector3.Distance(transform.position, shootHit.point);
+    //                int damage = Mathf.RoundToInt(shotgunDamagePerPellet * (1 - distance / rangeNovaGun));
+    //                enemyHealth.TakeDamage(damage, shootHit.point);
+    //            }
+
+    //            if (i == 0)
+    //            {
+    //                novaGunLine1.SetPosition(0, transform.position);
+    //                novaGunLine1.SetPosition(1, shootHit.point);
+    //            }
+    //            else if (i == 1)
+    //            {
+    //                novaGunLine2.SetPosition(0, transform.position);
+    //                novaGunLine2.SetPosition(1, shootHit.point);
+    //            }
+    //            else if (i == 2)
+    //            {
+    //                novaGunLine3.SetPosition(0, transform.position);
+    //                novaGunLine3.SetPosition(1, shootHit.point);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (i == 0)
+    //            {
+    //                novaGunLine1.SetPosition(0, transform.position);
+    //                novaGunLine1.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
+    //            }
+    //            else if (i == 1)
+    //            {
+    //                novaGunLine2.SetPosition(0, transform.position);
+    //                novaGunLine2.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
+    //            }
+    //            else if (i == 2)
+    //            {
+    //                novaGunLine3.SetPosition(0, transform.position);
+    //                novaGunLine3.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
+    //            }
+    //        }
+    //    }
+    //}
+
     public void NovaShoot()
     {
         timer = 0f;
 
-        novaGunAudio1.Play();
-        novaGunAudio2.Play();
-        novaGunAudio3.Play();
+        novaGunAudio.Play();
 
-        novaGunLight1.enabled = true;
-        novaGunLight2.enabled = true;
-        novaGunLight3.enabled = true;
+        //Play gun particle
+        gunParticles.Stop();
+        gunParticles.Play();
 
-        novaGunParticles1.Stop();
-        novaGunParticles2.Stop();
-        novaGunParticles3.Stop();
-        novaGunParticles1.Play();
-        novaGunParticles2.Play();
-        novaGunParticles3.Play();
+        //enable Line renderer
+        gunLine.enabled = true;
+        gunLine.positionCount = 10;
 
-        novaGunLine1.enabled = true;
-        novaGunLine2.enabled = true;
-        novaGunLine3.enabled = true;
-
-        for (int i = 0; i < 3; i++)
+        //set shooting rays
+        for (int i = 0; i < shootRaysNovaGun.Length; i++)
         {
-            Vector3 direction = transform.forward;
-            direction += transform.up * Random.Range(-0.05f, 0.05f);
-            direction += transform.right * Random.Range(-0.05f, 0.05f);
-
-            shootRay.origin = transform.position;
-            shootRay.direction = direction;
-
-            if (Physics.Raycast(shootRay, out shootHit, rangeNovaGun, shootableMaskNovaGun))
+            gunLine.SetPosition(2 * i, transform.position);
+            shootRaysNovaGun[i].origin = transform.position;
+            shootRaysNovaGun[i].direction = Quaternion.Euler(0, (-10 + i * 5), 0) * transform.forward;
+            //Lakukan raycast jika mendeteksi id nemy hit apapun
+            if (Physics.Raycast(shootRaysNovaGun[i], out shootHit, range, shootableMask))
             {
+                //Lakukan raycast hit hace component Enemyhealth
                 EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
 
                 if (enemyHealth != null)
                 {
-                    float distance = Vector3.Distance(transform.position, shootHit.point);
-                    int damage = Mathf.RoundToInt(shotgunDamagePerPellet * (1 - distance / rangeNovaGun));
-                    enemyHealth.TakeDamage(damage, shootHit.point);
+                    //Lakukan Take Damage
+                    enemyHealth.TakeDamage(damagePerShot, shootHit.point);
                 }
 
-                if (i == 0)
-                {
-                    novaGunLine1.SetPosition(0, transform.position);
-                    novaGunLine1.SetPosition(1, shootHit.point);
-                }
-                else if (i == 1)
-                {
-                    novaGunLine2.SetPosition(0, transform.position);
-                    novaGunLine2.SetPosition(1, shootHit.point);
-                }
-                else if (i == 2)
-                {
-                    novaGunLine3.SetPosition(0, transform.position);
-                    novaGunLine3.SetPosition(1, shootHit.point);
-                }
+                //Set line end position ke hit position
+                gunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
-                if (i == 0)
-                {
-                    novaGunLine1.SetPosition(0, transform.position);
-                    novaGunLine1.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
-                }
-                else if (i == 1)
-                {
-                    novaGunLine2.SetPosition(0, transform.position);
-                    novaGunLine2.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
-                }
-                else if (i == 2)
-                {
-                    novaGunLine3.SetPosition(0, transform.position);
-                    novaGunLine3.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
-                }
+                //set line end position ke range freom barrel
+                gunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * range);
             }
         }
     }
