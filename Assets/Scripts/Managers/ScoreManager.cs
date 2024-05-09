@@ -1,24 +1,35 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static int score;
 
 
-    Text text;
+    TextMeshProUGUI text;
 
 
     void Awake ()
     {
-        text = GetComponent<Text>();
+        text = GetComponent<TextMeshProUGUI>();
         score = 0;
     }
 
 
     void Update ()
     {
-        text.text = "Score: " + score;
+        text.text = score.ToString();
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void setScore(int inputScore)
+    {
+        score = inputScore;
     }
 }

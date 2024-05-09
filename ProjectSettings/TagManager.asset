@@ -9,6 +9,7 @@ TagManager:
   - PlayerPet
   - Pet
   - Weapon
+  - Shopkeeper
   layers:
   - Default
   - TransparentFX
