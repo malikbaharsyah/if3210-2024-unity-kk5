@@ -21,9 +21,9 @@ public class WeaponManager : MonoBehaviour
 
     // Sword
     public GameObject GalaxySword;
-	public bool canAttack = true;
-	public bool isAttacking = false;
-	public float attackCooldown = 0.5f;
+ public bool canAttack = true;
+ public bool isAttacking = false;
+ public float attackCooldown = 0.5f;
     public int damageSword;
     int startingDamageSword = 25;
 
@@ -177,6 +177,7 @@ public class WeaponManager : MonoBehaviour
         }
         else
         {
+            statMg.RecordShot(false);
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
     }
@@ -205,15 +206,12 @@ public class WeaponManager : MonoBehaviour
                     enemyHealth.TakeDamage(shotgunDamagePerPellet, shootHit.point);
                 }
                 statMg.RecordShot(enemyHealth);
-                //Set line end position ke hit position
-                gunLine.SetPosition(2 * i + 1, shootHit.point);
                 novaGunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
-                //set line end position ke range freom barrel
-                gunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * range);
                 statMg.RecordShot(false);
+                novaGunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * rangeNovaGun);
             }
         }
     }
