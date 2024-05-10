@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenuController : MonoBehaviour {
 
@@ -23,12 +24,17 @@ public class MainMenuController : MonoBehaviour {
     public Slider musicVol, sfxVol;
     public AudioMixer masterMixer;
 
+    public TMP_InputField playerNameInput;
+    public TMP_Dropdown difficultyDropdown;
+
     // Use this for initialization
     void Start () {
         anim = GetComponent<Animator>();
 
         //new key
         PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
+        PlayerPrefs.SetString("playerName", "Player");
+        PlayerPrefs.SetInt("difficulty", 0);
     }
 
     public void openOptions()
@@ -177,5 +183,19 @@ public class MainMenuController : MonoBehaviour {
     {
         float value = sfxVol.value;
         masterMixer.SetFloat("sfxVol", value);
+    }
+
+    public void SetPlayerName()
+    {
+        string playerName = playerNameInput.text;
+        PlayerPrefs.SetString("playerName", playerName);
+    }
+
+    public void SetDifficulty()
+    {
+        int difficulty = difficultyDropdown.value;
+        PlayerPrefs.SetInt("difficulty", difficulty);
+        Debug.Log("Difficulty set to: " + difficulty);
+        // TODO - set difficulty level 
     }
 }
