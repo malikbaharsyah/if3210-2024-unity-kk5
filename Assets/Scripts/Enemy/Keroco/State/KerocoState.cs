@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KerocoState : StateMachineBehaviour
 {
-    public float attackingDistance = 1.1f;
+    public float attackingDistance = 5f;
 
     protected Transform playerPosition;
     protected GameObject player;

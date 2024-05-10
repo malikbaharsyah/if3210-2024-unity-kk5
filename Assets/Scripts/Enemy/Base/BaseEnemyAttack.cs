@@ -7,7 +7,7 @@ public class BaseEnemyAttack : MonoBehaviour
     public int attackDamage = 10;
 
 
-    void Start()
+    protected virtual void Start()
     {
         enemyHand.damage = attackDamage;
     }
