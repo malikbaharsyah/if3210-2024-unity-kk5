@@ -5,6 +5,7 @@ using QFSW.QC;
 public class WeaponManager : MonoBehaviour
 {
     public StatisticsManager statMg;
+    public StatisticsManager statMg;
     // Default
     public GameObject Gun;
     public int damagePerShot = 20; 
@@ -47,6 +48,7 @@ public class WeaponManager : MonoBehaviour
 
     void Awake()
     {
+        statMg = FindObjectOfType<StatisticsManager>();
         statMg = FindObjectOfType<StatisticsManager>();
         shootableMask = LayerMask.GetMask("Shootable");
         gunParticles = GetComponent<ParticleSystem>();
