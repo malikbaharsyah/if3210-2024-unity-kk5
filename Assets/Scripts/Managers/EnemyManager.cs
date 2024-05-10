@@ -35,4 +35,10 @@ public class EnemyManager : MonoBehaviour
         
 
     }
+
+    public void StopSpawning()
+    {
+        CancelInvoke("Spawn");
+    }
+
 }

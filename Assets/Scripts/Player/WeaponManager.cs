@@ -4,6 +4,7 @@ using QFSW.QC;
 
 public class WeaponManager : MonoBehaviour
 {
+    public StatisticsManager statMg;
     // Default
     public GameObject Gun;
     public int damagePerShot = 20; 
@@ -46,6 +47,7 @@ public class WeaponManager : MonoBehaviour
 
     void Awake()
     {
+        statMg = FindObjectOfType<StatisticsManager>();
         shootableMask = LayerMask.GetMask("Shootable");
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
@@ -170,14 +172,95 @@ public class WeaponManager : MonoBehaviour
             {
                 enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
-
+            statMg.RecordShot(enemyHealth);
             gunLine.SetPosition(1, shootHit.point);
         }
         else
         {
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
+            statMg.RecordShot(false);
         }
     }
+
+    //public void NovaShoot()
+    //{
+    //    timer = 0f;
+
+    //    novaGunAudio1.Play();
+    //    novaGunAudio2.Play();
+    //    novaGunAudio3.Play();
+
+    //    novaGunLight1.enabled = true;
+    //    novaGunLight2.enabled = true;
+    //    novaGunLight3.enabled = true;
+
+    //    novaGunParticles1.Stop();
+    //    novaGunParticles2.Stop();
+    //    novaGunParticles3.Stop();
+    //    novaGunParticles1.Play();
+    //    novaGunParticles2.Play();
+    //    novaGunParticles3.Play();
+
+    //    novaGunLine1.enabled = true;
+    //    novaGunLine2.enabled = true;
+    //    novaGunLine3.enabled = true;
+
+    //    for (int i = 0; i < 3; i++)
+    //    {
+    //        Vector3 direction = transform.forward;
+    //        direction += transform.up * Random.Range(-0.05f, 0.05f);
+    //        direction += transform.right * Random.Range(-0.05f, 0.05f);
+
+    //        shootRay.origin = transform.position;
+    //        shootRay.direction = direction;
+
+    //        if (Physics.Raycast(shootRay, out shootHit, rangeNovaGun, shootableMaskNovaGun))
+    //        {
+    //            EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+
+    //            if (enemyHealth != null)
+    //            {
+    //                float distance = Vector3.Distance(transform.position, shootHit.point);
+    //                int damage = Mathf.RoundToInt(shotgunDamagePerPellet * (1 - distance / rangeNovaGun));
+    //                enemyHealth.TakeDamage(damage, shootHit.point);
+    //            }
+
+    //            if (i == 0)
+    //            {
+    //                novaGunLine1.SetPosition(0, transform.position);
+    //                novaGunLine1.SetPosition(1, shootHit.point);
+    //            }
+    //            else if (i == 1)
+    //            {
+    //                novaGunLine2.SetPosition(0, transform.position);
+    //                novaGunLine2.SetPosition(1, shootHit.point);
+    //            }
+    //            else if (i == 2)
+    //            {
+    //                novaGunLine3.SetPosition(0, transform.position);
+    //                novaGunLine3.SetPosition(1, shootHit.point);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (i == 0)
+    //            {
+    //                novaGunLine1.SetPosition(0, transform.position);
+    //                novaGunLine1.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
+    //            }
+    //            else if (i == 1)
+    //            {
+    //                novaGunLine2.SetPosition(0, transform.position);
+    //                novaGunLine2.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
+    //            }
+    //            else if (i == 2)
+    //            {
+    //                novaGunLine3.SetPosition(0, transform.position);
+    //                novaGunLine3.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
+    //            }
+    //        }
+    //    }
+    //}
 
     public void NovaShoot()
     {
@@ -202,11 +285,15 @@ public class WeaponManager : MonoBehaviour
                 {
                     enemyHealth.TakeDamage(shotgunDamagePerPellet, shootHit.point);
                 }
-                novaGunLine.SetPosition(2 * i + 1, shootHit.point);
+                statMg.RecordShot(enemyHealth);
+                //Set line end position ke hit position
+                gunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
-                novaGunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * rangeNovaGun);
+                //set line end position ke range freom barrel
+                gunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * range);
+                statMg.RecordShot(false);
             }
         }
     }

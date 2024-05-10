@@ -4,6 +4,7 @@ using QFSW.QC;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public StatisticsManager statMg;
     public float speed = 6f;
     Vector3 movement;
     Animator anim;
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        statMg = FindObjectOfType<StatisticsManager>();
         //mendapatkan nilai mask dari layer yang bernama Floor
         floorMask = LayerMask.GetMask("Floor");
 
@@ -47,7 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
         //Menormalisasi nilai vector agar total panjang dari vector adalah 1
         movement = movement.normalized * speed * Time.deltaTime;
-
+        float distance = movement.magnitude;
+        statMg.RecordDistance(distance);
         //Move to position
         playerRigidbody.MovePosition(transform.position + movement);
     }

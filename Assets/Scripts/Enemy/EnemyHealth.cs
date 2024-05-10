@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
-
+    public StatisticsManager statMg;
 
     protected Animator anim;
     protected AudioSource enemyAudio;
@@ -20,6 +20,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Awake()
     {
+        statMg = FindObjectOfType<StatisticsManager>();
         // Mendapatkan reference component
         anim = GetComponent<Animator>();
         enemyAudio = GetComponent<AudioSource>();
@@ -55,6 +56,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            statMg.RecordEnemyKilled();
             Death();
         }
     }
