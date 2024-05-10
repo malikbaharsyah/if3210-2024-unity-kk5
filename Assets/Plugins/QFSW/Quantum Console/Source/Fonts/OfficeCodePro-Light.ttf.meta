@@ -8,11 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Office Code Pro
   fontNames:
   - Office Code Pro
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 32c1196d211019546904eb4ea3890aec, type: 3}
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

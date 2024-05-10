@@ -20,7 +20,7 @@
 
 //        if (timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0)
 //        {
-//            Attack();
+//            Attack(playerHealth);
 //        }
 
 //        if (playerHealth.currentHealth <= 0)
@@ -31,7 +31,7 @@
 //    }
 
 
-//    protected override void Attack()
+//    protected override void Attack(PlayerHealth playerHealth)
 //    {
 //        timer = 0f;
 

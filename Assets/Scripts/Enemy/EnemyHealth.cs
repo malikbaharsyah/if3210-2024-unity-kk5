@@ -7,19 +7,22 @@ public class EnemyHealth : MonoBehaviour
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
 
-
-    Animator anim;
-    AudioSource enemyAudio;
-    ParticleSystem hitParticles;
-    CapsuleCollider capsuleCollider;
-    bool isDead;
-    bool isSinking;
+    protected Animator anim;
+    protected AudioSource enemyAudio;
+    protected ParticleSystem hitParticles;
+    protected CapsuleCollider capsuleCollider;
+    protected bool isDead;
+    protected bool isSinking;
 
     public GameObject[] orbPrefabs;
 
     void Awake()
     {
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         // Mendapatkan reference component
         anim = GetComponent<Animator>();
         enemyAudio = GetComponent<AudioSource>();
@@ -55,6 +58,8 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            statMg.RecordEnemyKilled();
+            locStatMg.RecordEnemyKilled();
             Death();
         }
     }
@@ -75,7 +80,7 @@ public class EnemyHealth : MonoBehaviour
     }
 
 
-    void Death()
+    protected virtual void Death()
     {
         isDead = true;
 

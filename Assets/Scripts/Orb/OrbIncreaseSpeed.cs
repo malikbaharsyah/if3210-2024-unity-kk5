@@ -8,6 +8,6 @@ public class OrbIncreaseSpeed : Orb
     {
         Debug.Log("Masuk OrbIncreaseSpeed");
         playerMovement = player.GetComponent<PlayerMovement>();
-        playerMovement.IncreaseSpeedByOrb(0.2f, 15f);
+        playerMovement.IncreaseSpeedByOrb();
     }
 }

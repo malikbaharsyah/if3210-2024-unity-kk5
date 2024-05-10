@@ -4,57 +4,52 @@ using QFSW.QC;
 
 public class WeaponManager : MonoBehaviour
 {
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
     // Default
     public GameObject Gun;
-    public int damagePerShot = 20;                  
+    public int damagePerShot = 20; 
+    int startingDamagePerShot = 20;                 
     public float timeBetweenBullets = 0.15f;        
     public float range = 100f;
 
     // Shotgun
     public GameObject NovaGun;
-    public int shotgunDamagePerPellet = 20;
-    public float rangeNovaGun = 15f;
-    public float timeBetweenBulletsNovaGun = 0.5f;
+    public int shotgunDamagePerPellet = 25;
+    int startingShotgunDamagePerPellet = 25;
+    public float rangeNovaGun = 10f;
+    public float timeBetweenBulletsNovaGun = 0.15f;
 
     // Sword
     public GameObject GalaxySword;
-	public bool canAttack = true;
-	public bool isAttacking = false;
-	public float attackCooldown = 0.5f;
+ public bool canAttack = true;
+ public bool isAttacking = false;
+ public float attackCooldown = 0.5f;
     public int damageSword;
+    int startingDamageSword = 25;
 
     // Weapon management
     int activeWeapon = 0;
 
-    public GameObject NovaBarrelEnd1;
-    public GameObject NovaBarrelEnd2;
-    public GameObject NovaBarrelEnd3;
-
     float timer;                                    
-    Ray shootRay = new Ray();                                   
+    Ray shootRay = new Ray();   
+    Ray[] shootRaysNovaGun = new Ray[3];                                
     RaycastHit shootHit;                            
     int shootableMask;
-    int shootableMaskNovaGun;
     ParticleSystem gunParticles;
-    ParticleSystem novaGunParticles1;
-    ParticleSystem novaGunParticles2;
-    ParticleSystem novaGunParticles3;
+    ParticleSystem novaGunParticles;
     LineRenderer gunLine;
-    LineRenderer novaGunLine1;
-    LineRenderer novaGunLine2;
-    LineRenderer novaGunLine3;                   
+    LineRenderer novaGunLine;                 
     AudioSource gunAudio; 
-    AudioSource novaGunAudio1;
-    AudioSource novaGunAudio2;
-    AudioSource novaGunAudio3;                          
-    Light gunLight;
-    Light novaGunLight1;
-    Light novaGunLight2;
-    Light novaGunLight3;                               
-    float effectsDisplayTime = 0.2f;      
+    public AudioSource novaGunAudio;                        
+    Light gunLight;  
+    Light novaGunLight;                         
+    float effectsDisplayTime = 0.2f;
 
     void Awake()
     {
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         shootableMask = LayerMask.GetMask("Shootable");
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
@@ -62,23 +57,14 @@ public class WeaponManager : MonoBehaviour
         gunLight = GetComponent<Light>();
         Gun = GameObject.Find("Gun");
         NovaGun = GameObject.Find("Nova");
+        novaGunParticles = NovaGun.GetComponentInChildren<ParticleSystem>();
+        novaGunLine = NovaGun.GetComponentInChildren<LineRenderer>();
+        novaGunAudio = NovaGun.GetComponentInChildren<AudioSource>();
+        novaGunLight = NovaGun.GetComponentInChildren<Light>();
         GalaxySword = GameObject.Find("GalaxySword");
         Gun.SetActive(false);
         NovaGun.SetActive(false);
         GalaxySword.SetActive(false);
-        shootableMaskNovaGun = LayerMask.GetMask("Shootable");
-        novaGunParticles1 = NovaBarrelEnd1.GetComponent<ParticleSystem>();
-        novaGunParticles2 = NovaBarrelEnd2.GetComponent<ParticleSystem>();
-        novaGunParticles3 = NovaBarrelEnd3.GetComponent<ParticleSystem>();
-        novaGunLine1 = NovaBarrelEnd1.GetComponent<LineRenderer>();
-        novaGunLine2 = NovaBarrelEnd2.GetComponent<LineRenderer>();
-        novaGunLine3 = NovaBarrelEnd3.GetComponent<LineRenderer>();
-        novaGunAudio1 = NovaBarrelEnd1.GetComponent<AudioSource>();
-        novaGunAudio2 = NovaBarrelEnd2.GetComponent<AudioSource>();
-        novaGunAudio3 = NovaBarrelEnd3.GetComponent<AudioSource>();
-        novaGunLight1 = NovaBarrelEnd1.GetComponent<Light>();
-        novaGunLight2 = NovaBarrelEnd2.GetComponent<Light>();
-        novaGunLight3 = NovaBarrelEnd3.GetComponent<Light>();
         damageSword = GalaxySword.GetComponentInChildren<SwordCollider>().damage;
     }
 
@@ -134,12 +120,8 @@ public class WeaponManager : MonoBehaviour
 
     public void DisableEffectsNovaGun()
     {
-        novaGunLine1.enabled = false;
-        novaGunLine2.enabled = false;
-        novaGunLine3.enabled = false;
-        novaGunLight1.enabled = false;
-        novaGunLight2.enabled = false;
-        novaGunLight3.enabled = false;
+        novaGunLine.enabled = false;
+        novaGunLight.enabled = false;
     }
 
     public void DisableEffects()
@@ -150,7 +132,7 @@ public class WeaponManager : MonoBehaviour
 
     public void Shoot()
     {
-        if (activeWeapon == 0 && timer >= timeBetweenBullets && Time.timeScale != 0 || activeWeapon == 1 && timer >= timeBetweenBullets && Time.timeScale != 0)
+        if (activeWeapon == 0 && timer >= timeBetweenBullets && Time.timeScale != 0 || activeWeapon == 1 && timer >= timeBetweenBulletsNovaGun && Time.timeScale != 0)
         {
             if (activeWeapon == 0)
             {
@@ -192,11 +174,14 @@ public class WeaponManager : MonoBehaviour
             {
                 enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
-
+            statMg.RecordShot(enemyHealth);
+            locStatMg.RecordShot(enemyHealth);
             gunLine.SetPosition(1, shootHit.point);
         }
         else
         {
+            statMg.RecordShot(false);
+            locStatMg.RecordShot(false);
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
     }
@@ -204,79 +189,35 @@ public class WeaponManager : MonoBehaviour
     public void NovaShoot()
     {
         timer = 0f;
+        novaGunAudio.Play();
+        novaGunLight.enabled = true;
+        novaGunParticles.Stop();
+        novaGunParticles.Play();
+        novaGunLine.enabled = true;
+        novaGunLine.positionCount = 6;
 
-        novaGunAudio1.Play();
-        novaGunAudio2.Play();
-        novaGunAudio3.Play();
-
-        novaGunLight1.enabled = true;
-        novaGunLight2.enabled = true;
-        novaGunLight3.enabled = true;
-
-        novaGunParticles1.Stop();
-        novaGunParticles2.Stop();
-        novaGunParticles3.Stop();
-        novaGunParticles1.Play();
-        novaGunParticles2.Play();
-        novaGunParticles3.Play();
-
-        novaGunLine1.enabled = true;
-        novaGunLine2.enabled = true;
-        novaGunLine3.enabled = true;
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < shootRaysNovaGun.Length; i++)
         {
-            Vector3 direction = transform.forward;
-            direction += transform.up * Random.Range(-0.05f, 0.05f);
-            direction += transform.right * Random.Range(-0.05f, 0.05f);
-
-            shootRay.origin = transform.position;
-            shootRay.direction = direction;
-
-            if (Physics.Raycast(shootRay, out shootHit, rangeNovaGun, shootableMaskNovaGun))
+            novaGunLine.SetPosition(2 * i, transform.position);
+            shootRaysNovaGun[i].origin = transform.position;
+            shootRaysNovaGun[i].direction = Quaternion.Euler(0, (-5 + i * 5), 0) * transform.forward;
+            if (Physics.Raycast(shootRaysNovaGun[i], out shootHit, rangeNovaGun, shootableMask))
             {
                 EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
 
                 if (enemyHealth != null)
                 {
-                    float distance = Vector3.Distance(transform.position, shootHit.point);
-                    int damage = Mathf.RoundToInt(shotgunDamagePerPellet * (1 - distance / rangeNovaGun));
-                    enemyHealth.TakeDamage(damage, shootHit.point);
+                    enemyHealth.TakeDamage(shotgunDamagePerPellet, shootHit.point);
                 }
-
-                if (i == 0)
-                {
-                    novaGunLine1.SetPosition(0, transform.position);
-                    novaGunLine1.SetPosition(1, shootHit.point);
-                }
-                else if (i == 1)
-                {
-                    novaGunLine2.SetPosition(0, transform.position);
-                    novaGunLine2.SetPosition(1, shootHit.point);
-                }
-                else if (i == 2)
-                {
-                    novaGunLine3.SetPosition(0, transform.position);
-                    novaGunLine3.SetPosition(1, shootHit.point);
-                }
+                statMg.RecordShot(enemyHealth);
+                locStatMg.RecordShot(enemyHealth);
+                novaGunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
-                if (i == 0)
-                {
-                    novaGunLine1.SetPosition(0, transform.position);
-                    novaGunLine1.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
-                }
-                else if (i == 1)
-                {
-                    novaGunLine2.SetPosition(0, transform.position);
-                    novaGunLine2.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
-                }
-                else if (i == 2)
-                {
-                    novaGunLine3.SetPosition(0, transform.position);
-                    novaGunLine3.SetPosition(1, shootRay.origin + shootRay.direction * rangeNovaGun);
-                }
+                statMg.RecordShot(false);
+                locStatMg.RecordShot(false);
+                novaGunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * rangeNovaGun);
             }
         }
     }
@@ -290,9 +231,9 @@ public class WeaponManager : MonoBehaviour
     {   
         Debug.Log("Damage increased terpanggil");
 
-        int maxDamageDefaultGun = Mathf.RoundToInt(2.5f * damagePerShot);
-        int maxDamageNovaGun = Mathf.RoundToInt(2.5f * shotgunDamagePerPellet);
-        int maxDamageSword = Mathf.RoundToInt(2.5f * damageSword);
+        int maxDamageDefaultGun = Mathf.RoundToInt(2.5f * startingDamagePerShot);
+        int maxDamageNovaGun = Mathf.RoundToInt(2.5f * startingShotgunDamagePerPellet);
+        int maxDamageSword = Mathf.RoundToInt(2.5f * startingDamageSword);
 
         damagePerShot = Mathf.Min(maxDamageDefaultGun, damagePerShot + Mathf.RoundToInt(percentage * damagePerShot));
         shotgunDamagePerPellet = Mathf.Min(maxDamageNovaGun, shotgunDamagePerPellet + Mathf.RoundToInt(percentage * shotgunDamagePerPellet));

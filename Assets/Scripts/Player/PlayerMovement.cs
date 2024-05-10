@@ -4,15 +4,22 @@ using QFSW.QC;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
     public float speed = 6f;
     Vector3 movement;
     Animator anim;
     Rigidbody playerRigidbody;
     int floorMask;
     float camRayLength = 100f;
+    bool isIncreaseSpeed = false;
+    float multiplier = 1.2f;
+    Coroutine increaseSpeedCourutine;
 
     private void Awake()
     {
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         //mendapatkan nilai mask dari layer yang bernama Floor
         floorMask = LayerMask.GetMask("Floor");
 
@@ -44,7 +51,9 @@ public class PlayerMovement : MonoBehaviour
 
         //Menormalisasi nilai vector agar total panjang dari vector adalah 1
         movement = movement.normalized * speed * Time.deltaTime;
-
+        float distance = movement.magnitude;
+        statMg.RecordDistance(distance);
+        locStatMg.RecordDistance(distance);
         //Move to position
         playerRigidbody.MovePosition(transform.position + movement);
     }
@@ -78,18 +87,32 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsWalking", walking);
     }
 
-    public void IncreaseSpeedByOrb(float percentage, float duration)
+    public void IncreaseSpeedByOrb()
     {
-        StartCoroutine(IncreaseSpeed(percentage, duration));
+        if (isIncreaseSpeed)
+        {
+            Debug.Log("Speed is already increased");
+            if (increaseSpeedCourutine != null)
+            {
+                Debug.Log("Stop Coroutine");
+                StopCoroutine(increaseSpeedCourutine);
+                increaseSpeedCourutine = null;
+            }
+            speed /= multiplier;
+        }
+        isIncreaseSpeed = true;
+        speed *= multiplier;
+        Debug.Log("Speed increased by orb: " + speed);
+        increaseSpeedCourutine = StartCoroutine(IncreaseSpeed());
     }
 
-    IEnumerator IncreaseSpeed(float percentage, float duration)
+    IEnumerator IncreaseSpeed()
     {
-        Debug.Log("Speed increased from " + speed + " to " + speed * (1 + percentage) + " for " + duration + " seconds");
-        speed *= (1 + percentage);
-        yield return new WaitForSeconds(duration);
-        speed /= (1 + percentage);
-        Debug.Log("Speed returned to " + speed);
+        Debug.Log("Coroutine Increase Speed started");
+        yield return new WaitForSeconds(15);
+        speed /= multiplier;
+        Debug.Log("Speed returned to normal: " + speed);
+        isIncreaseSpeed = false;
     }
 
     public void SetDoubleSpeed()
