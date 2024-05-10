@@ -4,6 +4,7 @@ using QFSW.QC;
 
 public class WeaponManager : MonoBehaviour
 {
+    public StatisticsManager statMg;
     // Default
     public GameObject Gun;
     public int damagePerShot = 20; 
@@ -46,6 +47,7 @@ public class WeaponManager : MonoBehaviour
 
     void Awake()
     {
+        statMg = FindObjectOfType<StatisticsManager>();
         shootableMask = LayerMask.GetMask("Shootable");
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
@@ -170,7 +172,7 @@ public class WeaponManager : MonoBehaviour
             {
                 enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
-
+            statMg.RecordShot(enemyHealth);
             gunLine.SetPosition(1, shootHit.point);
         }
         else
@@ -202,11 +204,16 @@ public class WeaponManager : MonoBehaviour
                 {
                     enemyHealth.TakeDamage(shotgunDamagePerPellet, shootHit.point);
                 }
+                statMg.RecordShot(enemyHealth);
+                //Set line end position ke hit position
+                gunLine.SetPosition(2 * i + 1, shootHit.point);
                 novaGunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
-                novaGunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * rangeNovaGun);
+                //set line end position ke range freom barrel
+                gunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * range);
+                statMg.RecordShot(false);
             }
         }
     }

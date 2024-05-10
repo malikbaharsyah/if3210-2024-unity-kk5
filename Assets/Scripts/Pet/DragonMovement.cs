@@ -45,14 +45,13 @@ public class DragonMovement : MonoBehaviour
                 {
                     Vector3 offset = direction.normalized * (distanceToEnemy - followDistanceLimit);
                     Vector3 targetPosition = closestEnemy.position - offset;
+                    agent.SetDestination(targetPosition);
                     anim.SetBool("IsFlying", true);
                     dragonFlames.SetActive(true);
 
                 } else
                 {
                     agent.ResetPath();
-                    anim.SetBool("IsFlying", false);
-                    dragonFlames.SetActive(false);
                 }
             }
         } else
