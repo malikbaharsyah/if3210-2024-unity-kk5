@@ -34,7 +34,6 @@ public class GriffinMovement : MonoBehaviour
             Vector3 movePosition = player.position;
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            // Avoid enemies
             Collider[] enemies = Physics.OverlapSphere(transform.position, 10f); 
             foreach (var enemy in enemies)
             {
