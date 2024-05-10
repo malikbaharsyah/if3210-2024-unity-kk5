@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class MainMenuController : MonoBehaviour {
 
     Animator anim;
 
-    public string newGameSceneName;
+    public int newGameScene;
     public int quickSaveSlotID;
 
     [Header("Options Panel")]
@@ -18,15 +21,21 @@ public class MainMenuController : MonoBehaviour {
     public GameObject GfxPanel;
     public GameObject LoadGamePanel;
 
+    public Slider musicVol, sfxVol;
+    public AudioMixer masterMixer;
+
+    public TMP_InputField playerNameInput;
+    public TMP_Dropdown difficultyDropdown;
+
     // Use this for initialization
     void Start () {
         anim = GetComponent<Animator>();
 
         //new key
         PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
+        PlayerPrefs.SetString("playerName", "Player");
+        PlayerPrefs.SetInt("difficulty", 0);
     }
-
-    #region Open Different panels
 
     public void openOptions()
     {
@@ -42,7 +51,6 @@ public class MainMenuController : MonoBehaviour {
 
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
-       
     }
 
     public void openStartGameOptions()
@@ -126,15 +134,9 @@ public class MainMenuController : MonoBehaviour {
 
     public void newGame()
     {
-        if (!string.IsNullOrEmpty(newGameSceneName))
-            SceneManager.LoadScene(newGameSceneName);
-        else
-            Debug.Log("Please write a scene name in the 'newGameSceneName' field of the Main Menu Script and don't forget to " +
-                "add that scene in the Build Settings!");
+        newGameScene = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(newGameScene);
     }
-    #endregion
-
-    #region Back Buttons
 
     public void back_options()
     {
@@ -162,18 +164,38 @@ public class MainMenuController : MonoBehaviour {
     {
         Application.Quit();
     }
-    #endregion
-
-    #region Sounds
     public void playHoverClip()
     {
-       
+
     }
 
     void playClickSound() {
 
     }
 
+    public void SetMusicVolume()
+    {
+        float value = musicVol.value;
+        masterMixer.SetFloat("musicVol", value);
+    }
 
-    #endregion
+    public void SetSFXVolume()
+    {
+        float value = sfxVol.value;
+        masterMixer.SetFloat("sfxVol", value);
+    }
+
+    public void SetPlayerName()
+    {
+        string playerName = playerNameInput.text;
+        PlayerPrefs.SetString("playerName", playerName);
+    }
+
+    public void SetDifficulty()
+    {
+        int difficulty = difficultyDropdown.value;
+        PlayerPrefs.SetInt("difficulty", difficulty);
+        Debug.Log("Difficulty set to: " + difficulty);
+        // TODO - set difficulty level 
+    }
 }
