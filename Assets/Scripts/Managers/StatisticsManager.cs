@@ -90,8 +90,9 @@ public class StatisticsManager : MonoBehaviour
         return $"{username}_{key}";
     }
 
-    public void SavePlayerStats(string username)
+    public void SavePlayerStats()
     {
+        username = PlayerPrefs.GetString("playerName");
         PlayerPrefs.SetInt(GetPrefKey(username, "TotalShots"), totalShots);
         PlayerPrefs.SetInt(GetPrefKey(username, "Accuracy"), shotAccuracy);
         PlayerPrefs.SetFloat(GetPrefKey(username, "DistanceTraveled"), distanceTraveled);
@@ -100,8 +101,9 @@ public class StatisticsManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadPlayerStats(string username)
+    public void LoadPlayerStats()
     {
+        username = PlayerPrefs.GetString("playerName");
         totalShots = PlayerPrefs.GetInt(GetPrefKey(username, "TotalShots"), 0);
         shotAccuracy = PlayerPrefs.GetInt(GetPrefKey(username, "Accuracy"), 0);
         distanceTraveled = PlayerPrefs.GetFloat(GetPrefKey(username, "DistanceTraveled"), 0f);

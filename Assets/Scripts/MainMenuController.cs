@@ -11,7 +11,7 @@ public class MainMenuController : MonoBehaviour {
     Animator anim;
 
     public int newGameScene;
-    public int quickSaveSlotID;
+    // public int quickSaveSlotID;
 
     [Header("Options Panel")]
     public GameObject MainOptionsPanel;
@@ -27,14 +27,29 @@ public class MainMenuController : MonoBehaviour {
     public TMP_InputField playerNameInput;
     public TMP_Dropdown difficultyDropdown;
 
+    public GlobalStatistics globalStats;
+    public Text playerVal;
+    public Text totalShootVal;
+    public Text shotAccVal;
+    public Text enemyKillVal;
+    public Text distTravVal;
+    public Text hurtVal;
+    public Text playTimeVal;
+
     // Use this for initialization
     void Start () {
         anim = GetComponent<Animator>();
 
         //new key
-        PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
-        PlayerPrefs.SetString("playerName", "Player");
-        PlayerPrefs.SetInt("difficulty", 0);
+        // PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
+        if (!PlayerPrefs.HasKey("playerName")) {
+            PlayerPrefs.SetString("playerName", "Player");
+        }
+        if (!PlayerPrefs.HasKey("difficulty")) {
+            PlayerPrefs.SetInt("difficulty", 0);
+        }
+        globalStats = FindObjectOfType<GlobalStatistics>();
+        globalStats.LoadPlayerStats();
     }
 
     public void openOptions()
@@ -77,9 +92,18 @@ public class MainMenuController : MonoBehaviour {
         ControlsPanel.SetActive(false);
         GfxPanel.SetActive(false);
         LoadGamePanel.SetActive(false);
+        
 
         //play anim for opening game options panel
         anim.Play("OptTweenAnim_on");
+        globalStats.LoadPlayerStats();
+        playerVal.text = PlayerPrefs.GetString("playerName");
+        totalShootVal.text = globalStats.GetTotalShots().ToString();
+        shotAccVal.text = globalStats.GetShotAccuracy().ToString();
+        enemyKillVal.text = globalStats.GetTotalEnemiesKilled().ToString();
+        distTravVal.text = globalStats.GetDistanceTraveled().ToString();
+        hurtVal.text = globalStats.GetTotalHurts().ToString();
+        playTimeVal.text = globalStats.GetPlayTime().ToString();
 
         //play click sfx
         playClickSound();
@@ -189,6 +213,8 @@ public class MainMenuController : MonoBehaviour {
     {
         string playerName = playerNameInput.text;
         PlayerPrefs.SetString("playerName", playerName);
+        globalStats.LoadPlayerStats();
+        Debug.Log("Player name set to: " + playerName);
     }
 
     public void SetDifficulty()
@@ -198,4 +224,5 @@ public class MainMenuController : MonoBehaviour {
         Debug.Log("Difficulty set to: " + difficulty);
         // TODO - set difficulty level 
     }
+
 }
