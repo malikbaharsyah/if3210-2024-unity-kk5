@@ -6,13 +6,15 @@ public class WeaponManager : MonoBehaviour
 {
     // Default
     public GameObject Gun;
-    public int damagePerShot = 20;                  
+    public int damagePerShot = 20; 
+    int startingDamagePerShot = 20;                 
     public float timeBetweenBullets = 0.15f;        
     public float range = 100f;
 
     // Shotgun
     public GameObject NovaGun;
     public int shotgunDamagePerPellet = 25;
+    int startingShotgunDamagePerPellet = 25;
     public float rangeNovaGun = 10f;
     public float timeBetweenBulletsNovaGun = 0.15f;
 
@@ -22,12 +24,14 @@ public class WeaponManager : MonoBehaviour
 	public bool isAttacking = false;
 	public float attackCooldown = 0.5f;
     public int damageSword;
+    int startingDamageSword = 25;
 
     // Weapon management
     int activeWeapon = 0;
 
     float timer;                                    
-    Ray shootRay = new Ray();                                   
+    Ray shootRay = new Ray();   
+    Ray[] shootRaysNovaGun = new Ray[3];                                
     RaycastHit shootHit;                            
     int shootableMask;
     ParticleSystem gunParticles;
@@ -39,7 +43,6 @@ public class WeaponManager : MonoBehaviour
     Light gunLight;  
     Light novaGunLight;                         
     float effectsDisplayTime = 0.2f;
-    Ray[] shootRaysNovaGun = new Ray[5];
 
     void Awake()
     {
@@ -184,13 +187,13 @@ public class WeaponManager : MonoBehaviour
         novaGunParticles.Stop();
         novaGunParticles.Play();
         novaGunLine.enabled = true;
-        novaGunLine.positionCount = 10;
+        novaGunLine.positionCount = 6;
 
         for (int i = 0; i < shootRaysNovaGun.Length; i++)
         {
             novaGunLine.SetPosition(2 * i, transform.position);
             shootRaysNovaGun[i].origin = transform.position;
-            shootRaysNovaGun[i].direction = Quaternion.Euler(0, (-10 + i * 5), 0) * transform.forward;
+            shootRaysNovaGun[i].direction = Quaternion.Euler(0, (-5 + i * 5), 0) * transform.forward;
             if (Physics.Raycast(shootRaysNovaGun[i], out shootHit, rangeNovaGun, shootableMask))
             {
                 EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
@@ -217,9 +220,9 @@ public class WeaponManager : MonoBehaviour
     {   
         Debug.Log("Damage increased terpanggil");
 
-        int maxDamageDefaultGun = Mathf.RoundToInt(2.5f * damagePerShot);
-        int maxDamageNovaGun = Mathf.RoundToInt(2.5f * shotgunDamagePerPellet);
-        int maxDamageSword = Mathf.RoundToInt(2.5f * damageSword);
+        int maxDamageDefaultGun = Mathf.RoundToInt(2.5f * startingDamagePerShot);
+        int maxDamageNovaGun = Mathf.RoundToInt(2.5f * startingShotgunDamagePerPellet);
+        int maxDamageSword = Mathf.RoundToInt(2.5f * startingDamageSword);
 
         damagePerShot = Mathf.Min(maxDamageDefaultGun, damagePerShot + Mathf.RoundToInt(percentage * damagePerShot));
         shotgunDamagePerPellet = Mathf.Min(maxDamageNovaGun, shotgunDamagePerPellet + Mathf.RoundToInt(percentage * shotgunDamagePerPellet));

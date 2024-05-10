@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour {
 
@@ -17,6 +19,9 @@ public class MainMenuController : MonoBehaviour {
     public GameObject ControlsPanel;
     public GameObject GfxPanel;
     public GameObject LoadGamePanel;
+
+    public Slider musicVol, sfxVol;
+    public AudioMixer masterMixer;
 
     // Use this for initialization
     void Start () {
@@ -40,7 +45,6 @@ public class MainMenuController : MonoBehaviour {
 
         //enable BLUR
         //Camera.main.GetComponent<Animator>().Play("BlurOn");
-       
     }
 
     public void openStartGameOptions()
@@ -161,5 +165,17 @@ public class MainMenuController : MonoBehaviour {
 
     void playClickSound() {
 
+    }
+
+    public void SetMusicVolume()
+    {
+        float value = musicVol.value;
+        masterMixer.SetFloat("musicVol", value);
+    }
+
+    public void SetSFXVolume()
+    {
+        float value = sfxVol.value;
+        masterMixer.SetFloat("sfxVol", value);
     }
 }
