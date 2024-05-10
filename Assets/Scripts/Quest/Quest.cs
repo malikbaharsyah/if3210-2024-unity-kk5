@@ -10,7 +10,7 @@ public class Quest : MonoBehaviour
 {
     public bool isActive = true;
     public string nextScene;
-    public StatisticsManager statMg;
+    public LocalStatistics statMg;
     public TextMeshProUGUI title;
     public TextMeshProUGUI progress;
     public GameObject nextButton;
@@ -19,7 +19,7 @@ public class Quest : MonoBehaviour
 
     void Awake()
     {
-        statMg = FindObjectOfType<StatisticsManager>();
+        statMg = FindObjectOfType<LocalStatistics>();
         title = transform.Find("MissionTitle").GetComponent<TextMeshProUGUI>();
         progress = transform.Find("Progress").GetComponent<TextMeshProUGUI>();
         nextButton = transform.Find("NextButton").gameObject;

@@ -4,7 +4,8 @@ using QFSW.QC;
 
 public class WeaponManager : MonoBehaviour
 {
-    public StatisticsManager statMg;
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
     // Default
     public GameObject Gun;
     public int damagePerShot = 20; 
@@ -47,7 +48,8 @@ public class WeaponManager : MonoBehaviour
 
     void Awake()
     {
-        statMg = FindObjectOfType<StatisticsManager>();
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         shootableMask = LayerMask.GetMask("Shootable");
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
@@ -173,11 +175,13 @@ public class WeaponManager : MonoBehaviour
                 enemyHealth.TakeDamage(damagePerShot, shootHit.point);
             }
             statMg.RecordShot(enemyHealth);
+            locStatMg.RecordShot(enemyHealth);
             gunLine.SetPosition(1, shootHit.point);
         }
         else
         {
             statMg.RecordShot(false);
+            locStatMg.RecordShot(false);
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
     }
@@ -206,11 +210,13 @@ public class WeaponManager : MonoBehaviour
                     enemyHealth.TakeDamage(shotgunDamagePerPellet, shootHit.point);
                 }
                 statMg.RecordShot(enemyHealth);
+                locStatMg.RecordShot(enemyHealth);
                 novaGunLine.SetPosition(2 * i + 1, shootHit.point);
             }
             else
             {
                 statMg.RecordShot(false);
+                locStatMg.RecordShot(false);
                 novaGunLine.SetPosition(2 * i + 1, shootRaysNovaGun[i].origin + shootRaysNovaGun[i].direction * rangeNovaGun);
             }
         }

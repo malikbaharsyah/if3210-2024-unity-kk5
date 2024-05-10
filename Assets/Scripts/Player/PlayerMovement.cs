@@ -4,7 +4,8 @@ using QFSW.QC;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public StatisticsManager statMg;
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
     public float speed = 6f;
     Vector3 movement;
     Animator anim;
@@ -17,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        statMg = FindObjectOfType<StatisticsManager>();
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         //mendapatkan nilai mask dari layer yang bernama Floor
         floorMask = LayerMask.GetMask("Floor");
 
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         movement = movement.normalized * speed * Time.deltaTime;
         float distance = movement.magnitude;
         statMg.RecordDistance(distance);
+        locStatMg.RecordDistance(distance);
         //Move to position
         playerRigidbody.MovePosition(transform.position + movement);
     }

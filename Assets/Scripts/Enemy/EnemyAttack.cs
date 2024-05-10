@@ -5,7 +5,8 @@ public class EnemyAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.5f;
     public int attackDamage = 10;
-    public StatisticsManager statMg;
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
 
     protected Animator anim;
     protected GameObject player;
@@ -19,7 +20,8 @@ public class EnemyAttack : MonoBehaviour
 
     void Awake()
     {
-        statMg = FindObjectOfType<StatisticsManager>();
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -109,6 +111,7 @@ public class EnemyAttack : MonoBehaviour
         if (targetHealth != null)
         {
             statMg.RecordHurt();
+            locStatMg.RecordHurt();
             targetHealth.TakeDamage(attackDamage);
         }
         else
