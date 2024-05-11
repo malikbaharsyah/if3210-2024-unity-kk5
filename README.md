@@ -1,4 +1,4 @@
-# IF3210-2023-Unity-PEW
+# IF3210-2024-Unity-KK5
 
 Survival Shooter The Sequel adalah sebuah _survival game_ di mana _namachara_ harus berhasil bertahan hidup hingga mengalahkan musuh utamanya, yaitu _opponent_. _namachara_ dapat menggunakan senjata untuk bertahan hidup dari serangan-serangan zombie yang mengepungnya maupun membeli pet yang dapat membantunya.
 
