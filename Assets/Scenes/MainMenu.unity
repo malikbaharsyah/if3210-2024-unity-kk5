@@ -7320,6 +7320,12 @@ MonoBehaviour:
   distTravVal: {fileID: 365771405}
   hurtVal: {fileID: 587029891}
   playTimeVal: {fileID: 263158287}
+  saveGame1: {fileID: 1703002973}
+  saveGame2: {fileID: 1937794631}
+  saveGame3: {fileID: 1617857602}
+  playTime1: {fileID: 356715982}
+  playTime2: {fileID: 1729825252}
+  playTime3: {fileID: 153098573}
 --- !u!95 &1375287391
 Animator:
   serializedVersion: 5
@@ -9913,7 +9919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac99942c98df8144a402c3dfce0d45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  username: 
 --- !u!4 &1883700306
 Transform:
   m_ObjectHideFlags: 0
