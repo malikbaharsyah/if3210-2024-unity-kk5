@@ -9,6 +9,8 @@ public class BaseEnemyAttack : MonoBehaviour
 
     protected virtual void Start()
     {
-        enemyHand.damage = attackDamage;
+        if (enemyHand != null) {
+            enemyHand.damage = attackDamage;
+        }
     }
 }

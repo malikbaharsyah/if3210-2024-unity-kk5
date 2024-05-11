@@ -6,6 +6,8 @@ public class RajaHealth : BaseEnemyHealth
 {
     protected override void Death()
     {
+        statMg.RecordEnemyKilled();
+        locStatMg.RecordEnemyKilled();
         isDead = true;
 
         capsuleCollider.isTrigger = true;
@@ -27,5 +29,6 @@ public class RajaHealth : BaseEnemyHealth
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
+        SpawnOrb();
     }
 }

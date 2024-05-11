@@ -10,7 +10,7 @@ public class SwordCollider : MonoBehaviour
     {
         if (objectCollider.CompareTag("Enemy") && playerSwording.isAttacking)
         {
-            var enemyHealth = objectCollider.GetComponent<EnemyHealth>();
+            var enemyHealth = objectCollider.GetComponent<BaseEnemyHealth>();
 
             if (enemyHealth)
             {

@@ -18,7 +18,7 @@ public class DragonBreath : MonoBehaviour
         {
             if (other.CompareTag("Enemy"))
             {
-                EnemyHealth enemyHealth = other.GetComponent<EnemyHealth>();
+                BaseEnemyHealth enemyHealth = other.GetComponent<BaseEnemyHealth>();
                 if (enemyHealth != null)
                 {
                     Vector3 hitPoint = other.transform.position;

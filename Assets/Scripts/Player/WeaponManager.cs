@@ -168,7 +168,7 @@ public class WeaponManager : MonoBehaviour
 
         if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
-            EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+            BaseEnemyHealth enemyHealth = shootHit.collider.GetComponent<BaseEnemyHealth>();
 
             if (enemyHealth != null)
             {
@@ -203,7 +203,7 @@ public class WeaponManager : MonoBehaviour
             shootRaysNovaGun[i].direction = Quaternion.Euler(0, (-5 + i * 5), 0) * transform.forward;
             if (Physics.Raycast(shootRaysNovaGun[i], out shootHit, rangeNovaGun, shootableMask))
             {
-                EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+                BaseEnemyHealth enemyHealth = shootHit.collider.GetComponent<BaseEnemyHealth>();
 
                 if (enemyHealth != null)
                 {
@@ -248,7 +248,7 @@ public class WeaponManager : MonoBehaviour
 
     public void SetOneHitKill()
     {
-        EnemyHealth enemyHealth = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyHealth>();
+        BaseEnemyHealth enemyHealth = GameObject.FindGameObjectWithTag("Enemy").GetComponent<BaseEnemyHealth>();
         damagePerShot = enemyHealth.startingHealth;
         shotgunDamagePerPellet = enemyHealth.startingHealth;
         damageSword = enemyHealth.startingHealth;

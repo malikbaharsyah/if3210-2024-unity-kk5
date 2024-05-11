@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KerocoHealth : EnemyHealth
+public class KerocoHealth : BaseEnemyHealth
 {
     protected override void Death()
     {
+        statMg.RecordEnemyKilled();
+        locStatMg.RecordEnemyKilled();
         isDead = true;
 
         capsuleCollider.isTrigger = true;
@@ -27,5 +29,6 @@ public class KerocoHealth : EnemyHealth
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
+        SpawnOrb();
     }
 }
