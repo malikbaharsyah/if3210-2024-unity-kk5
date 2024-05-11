@@ -92,18 +92,19 @@ public class MainMenuController : MonoBehaviour {
         ControlsPanel.SetActive(false);
         GfxPanel.SetActive(false);
         LoadGamePanel.SetActive(false);
-        
 
+        
         //play anim for opening game options panel
         anim.Play("OptTweenAnim_on");
         globalStats.LoadPlayerStats();
+        UnityEngine.Debug.Log(globalStats.GetTotalHurts());
         playerVal.text = PlayerPrefs.GetString("playerName");
         totalShootVal.text = globalStats.GetTotalShots().ToString();
         shotAccVal.text = globalStats.GetShotAccuracy().ToString();
         enemyKillVal.text = globalStats.GetTotalEnemiesKilled().ToString();
         distTravVal.text = globalStats.GetDistanceTraveled().ToString();
         hurtVal.text = globalStats.GetTotalHurts().ToString();
-        playTimeVal.text = globalStats.GetPlayTime().ToString();
+        playTimeVal.text = globalStats.GetPlayTime();
 
         //play click sfx
         playClickSound();

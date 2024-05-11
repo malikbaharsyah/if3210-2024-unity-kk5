@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using QFSW.QC;
+using System.Threading;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        statMg.AddPlayTime(Time.deltaTime);
+        locStatMg.AddPlayTime(Time.deltaTime);
         //Mendapatkan nilai input horizontal (-1,0,1)
         float h = Input.GetAxisRaw("Horizontal");
 

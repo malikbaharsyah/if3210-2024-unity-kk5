@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QFSW.QC;
+using System.Diagnostics;
 
 public class PetHealth : MonoBehaviour
 {
@@ -71,6 +72,14 @@ public class PetHealth : MonoBehaviour
     private void FullHealthPet()
     {
         SetFullHealthPet();
-        Debug.Log("Cheat Full Health Pet activated");
+        UnityEngine.Debug.Log("Cheat Full Health Pet activated");
+    }
+
+    [Command("killpet")]
+    private void KillPet()
+    {
+        if (isDead) return;
+        Death();
+        UnityEngine.Debug.Log("Cheat Kill Pet Activated");
     }
 }

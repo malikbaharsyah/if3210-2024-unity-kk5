@@ -4,7 +4,10 @@ using System.Collections;
 
 public class Shopkeeper : MonoBehaviour
 {
+    public int disappearTime;
+    public GameObject shopKeeperObject;
     public Transform player;
+    public Transform shopKeeper;
     public float interactionDistance = 1f;
     public GameObject shopUI;
     public GameObject noShop;
@@ -12,9 +15,11 @@ public class Shopkeeper : MonoBehaviour
 
     void Awake()
     {
+        shopKeeper = shopKeeperObject.transform;
         noShop.SetActive(false);
         isShowing = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        StartCoroutine(delayShop());
     }
 
     void Update()
@@ -23,11 +28,10 @@ public class Shopkeeper : MonoBehaviour
         {
             if (!isShowing)
             {
-                if (Vector3.Distance(player.position, transform.position) <= interactionDistance)
+                if (Vector3.Distance(player.position, shopKeeper.position) <= interactionDistance && shopKeeperObject.activeInHierarchy)
                 {
                     ToggleShopUI(true);
                     isShowing = true;
-                    Time.timeScale = 0;
                 }
                 else
                 {
@@ -40,7 +44,6 @@ public class Shopkeeper : MonoBehaviour
                 isShowing = false;             
             }
         }
-        Time.timeScale = isShowing ? 0 : 1;
     }
 
     void ToggleShopUI(bool show)
@@ -49,10 +52,6 @@ public class Shopkeeper : MonoBehaviour
         {
             shopUI.SetActive(show);
         }
-        else
-        {
-            UnityEngine.Debug.LogError("Shop UI GameObject not assigned!");
-        }
     }
 
     IEnumerator showNoShop()
@@ -60,5 +59,14 @@ public class Shopkeeper : MonoBehaviour
         noShop.SetActive(true);
         yield return new WaitForSeconds(1);
         noShop.SetActive(false);
+    }
+
+    IEnumerator delayShop()
+    {
+        shopKeeperObject.SetActive(true);
+        yield return new WaitForSeconds(disappearTime);
+        shopKeeperObject.SetActive(false);
+        ToggleShopUI(false);
+        isShowing = false;
     }
 }

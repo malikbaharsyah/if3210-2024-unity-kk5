@@ -207,7 +207,9 @@ public class WeaponManager : MonoBehaviour
 
                 if (enemyHealth != null)
                 {
-                    enemyHealth.TakeDamage(shotgunDamagePerPellet, shootHit.point);
+                    float distance = Vector3.Distance(transform.position, shootHit.point);
+                    int damage = Mathf.RoundToInt(shotgunDamagePerPellet * (1 - distance / rangeNovaGun));
+                    enemyHealth.TakeDamage(damage, shootHit.point);
                 }
                 statMg.RecordShot(enemyHealth);
                 locStatMg.RecordShot(enemyHealth);

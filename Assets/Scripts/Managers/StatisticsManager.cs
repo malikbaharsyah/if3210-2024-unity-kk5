@@ -5,30 +5,13 @@ public class StatisticsManager : MonoBehaviour
 {
     public static StatisticsManager Instance { get; private set; }
 
-    public string username;
+    private string username;
     private int totalShots;
     private int shotAccuracy;
     private int hurt;
     private float distanceTraveled;
     private float playTime;
     private int enemiesKilled;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    void Update()
-    {
-        playTime += Time.deltaTime;
-    }
 
     public void RecordShot(bool hit)
     {
@@ -70,6 +53,11 @@ public class StatisticsManager : MonoBehaviour
         return time.ToString(@"hh\:mm\:ss");
     }
 
+    public void AddPlayTime(float addition)
+    {
+        playTime += addition;
+    }
+
     public float GetDistanceTraveled()
     {
         return distanceTraveled;
@@ -98,6 +86,7 @@ public class StatisticsManager : MonoBehaviour
         PlayerPrefs.SetFloat(GetPrefKey(username, "DistanceTraveled"), distanceTraveled);
         PlayerPrefs.SetInt(GetPrefKey(username, "EnemiesKilled"), enemiesKilled);
         PlayerPrefs.SetFloat(GetPrefKey(username, "PlayTime"), playTime);
+        PlayerPrefs.SetInt(GetPrefKey(username, "Hurt"), hurt);
         PlayerPrefs.Save();
     }
 
@@ -109,6 +98,7 @@ public class StatisticsManager : MonoBehaviour
         distanceTraveled = PlayerPrefs.GetFloat(GetPrefKey(username, "DistanceTraveled"), 0f);
         enemiesKilled = PlayerPrefs.GetInt(GetPrefKey(username, "EnemiesKilled"), 0);
         playTime = PlayerPrefs.GetFloat(GetPrefKey(username, "PlayTime"), 0f);
+        hurt = PlayerPrefs.GetInt(GetPrefKey(username, "Hurt"), 0);
     }
 
 }

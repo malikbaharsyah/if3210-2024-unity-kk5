@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameOverController : MonoBehaviour {
 
-    Animator anim;
+    //Animator anim;
     
     public GlobalStatistics globalStats;
     public Text playerVal;
@@ -18,8 +18,8 @@ public class GameOverController : MonoBehaviour {
     public Text playTimeVal;
 
     void Start () {
-        anim = GetComponent<Animator>();
-        anim.Play("OptTweenAnim_on");
+        //anim = GetComponent<Animator>();
+        //anim.Play("OptTweenAnim_on");
         globalStats = FindObjectOfType<GlobalStatistics>();
         globalStats.LoadPlayerStats();
         playerVal.text = PlayerPrefs.GetString("playerName");
@@ -28,7 +28,7 @@ public class GameOverController : MonoBehaviour {
         enemyKillVal.text = globalStats.GetTotalEnemiesKilled().ToString();
         distTravVal.text = globalStats.GetDistanceTraveled().ToString();
         hurtVal.text = globalStats.GetTotalHurts().ToString();
-        playTimeVal.text = globalStats.GetPlayTime().ToString();
+        playTimeVal.text = globalStats.GetPlayTime();
     }
 
 

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using QFSW.QC;
 
 public class Quest : MonoBehaviour
 {
@@ -68,5 +69,12 @@ public class Quest : MonoBehaviour
             scoreManager.SaveScore();
             SceneManager.LoadScene(nextScene);
         }
+    }
+
+    [Command("skip")]
+    private void SkipLevel()
+    {
+        SceneManager.LoadScene(nextScene);
+        UnityEngine.Debug.Log("Cheat Skip Level Activated");
     }
 }

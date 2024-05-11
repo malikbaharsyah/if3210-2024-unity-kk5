@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using QFSW.QC;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -35,12 +36,21 @@ public class ScoreManager : MonoBehaviour
 
     public void SaveScore()
     {
-        PlayerPrefs.SetInt("PlayerCoin", score);
+        string username = PlayerPrefs.GetString("playerName", "Player");
+        PlayerPrefs.SetInt(username+"_coin", score);
         PlayerPrefs.Save();
     }
 
     public void LoadScore()
     {
-        score = PlayerPrefs.GetInt("PlayerCoin", 0);
+        string username = PlayerPrefs.GetString("playerName", "Player");
+        score = PlayerPrefs.GetInt(username+"_coin", 0);
+    }
+
+    [Command("motherlode")]
+    private void Motherlode()
+    {
+        setScore(int.MaxValue);
+        UnityEngine.Debug.Log("Cheat Infinity Money Activated");
     }
 }

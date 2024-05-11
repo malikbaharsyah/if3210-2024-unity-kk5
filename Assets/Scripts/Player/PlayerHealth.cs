@@ -14,6 +14,8 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip deathClip;
     public float flashSpeed = 5f;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
 
 
     Animator anim;
@@ -28,6 +30,8 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake()
     {
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         // Mendapatkan reference komponen
         anim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
@@ -64,6 +68,9 @@ public class PlayerHealth : MonoBehaviour
         {
             return;
         }
+        statMg.RecordHurt();
+        locStatMg.RecordHurt();
+        UnityEngine.Debug.Log(statMg.GetTotalHurts());
         damaged = true;
 
         currentHealth -= amount;
