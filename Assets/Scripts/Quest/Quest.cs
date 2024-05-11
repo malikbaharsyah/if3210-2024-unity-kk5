@@ -19,10 +19,15 @@ public class Quest : MonoBehaviour
     public int rewardAmount;
     private Button nextBtn;
     private Button saveBtn;
+    public static int difficulty;
 
     void Awake()
     {
         statMg = FindObjectOfType<LocalStatistics>();
+        string username = PlayerPrefs.GetString("playerName");
+        difficulty = PlayerPrefs.GetInt(username+"_Difficulty", 0);
+        difficulty++;
+        UnityEngine.Debug.Log("Difficulty set to: " + username + " " + difficulty); ;
         title = transform.Find("MissionTitle").GetComponent<TextMeshProUGUI>();
         progress = transform.Find("Progress").GetComponent<TextMeshProUGUI>();
         nextButton = transform.Find("NextButton").gameObject;

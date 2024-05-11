@@ -6,11 +6,13 @@ using TMPro;
 
 public class Quest2 : Quest
 {
-    public int targetKill = 5;
+    private int targetKill;
 
     // Start is called before the first frame update
     void Start()
     {
+        rewardAmount = 100 * difficulty;
+        targetKill = 5 * difficulty;
         title.text = "Kill " + targetKill + "enemies";
     }
 

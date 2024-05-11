@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SaveController : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class SaveController : MonoBehaviour
         PlayerPrefs.SetString("playTime1", playTime);
         saveGame1.text = username;
         playTime1.text = playTime;
+        string scene = PlayerPrefs.GetString(username + "_scene", "Cutscene1");
+        SceneManager.LoadScene(scene);
     }
 
     public void SaveGameButton2()
@@ -40,6 +43,8 @@ public class SaveController : MonoBehaviour
         PlayerPrefs.SetString("playTime2", playTime);
         saveGame2.text = username;
         playTime2.text = playTime;
+        string scene = PlayerPrefs.GetString(username + "_scene", "Cutscene1");
+        SceneManager.LoadScene(scene);
     }
 
     public void SaveGameButton3()
@@ -51,6 +56,8 @@ public class SaveController : MonoBehaviour
         PlayerPrefs.SetString("playTime3", playTime);
         saveGame3.text = username;
         playTime3.text = playTime;
+        string scene = PlayerPrefs.GetString(username + "_scene", "Cutscene1");
+        SceneManager.LoadScene(scene);
     }
 
     public void UpdateSaveSlots()

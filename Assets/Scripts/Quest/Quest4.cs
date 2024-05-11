@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Quest4 : Quest
 {
-    public int targetShoot = 20;
+    public int targetShoot;
 
     // Start is called before the first frame update
     void Start()
     {
-        nextScene = "Level";
+        rewardAmount = 100 * difficulty;
+        targetShoot = 20 * difficulty;
         title.text = "Shot Enemies " + targetShoot + " times";
     }
 

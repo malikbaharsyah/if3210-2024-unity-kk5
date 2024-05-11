@@ -3,11 +3,13 @@ using TMPro;
 
 public class Quest1 : Quest
 {
-    public float finishTime = 60f;
+    private float finishTime;
     private float timer;
 
     void Start()
     {
+        rewardAmount = 100 * difficulty;
+        finishTime = 60f * difficulty;
         title.text = "Survive for " + finishTime + "s";
     }
 

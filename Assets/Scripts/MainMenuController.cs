@@ -232,9 +232,9 @@ public class MainMenuController : MonoBehaviour {
     public void SetDifficulty()
     {
         int difficulty = difficultyDropdown.value;
-        PlayerPrefs.SetInt("difficulty", difficulty);
-        Debug.Log("Difficulty set to: " + difficulty);
-        // TODO - set difficulty level 
+        string username = PlayerPrefs.GetString("playerName");
+        PlayerPrefs.SetInt(username+"_Difficulty", difficulty);
+        Debug.Log("Difficulty set to: " + username + " " +difficulty);
     }
 
     public void LoadGame1()

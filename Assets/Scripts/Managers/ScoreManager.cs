@@ -7,6 +7,7 @@ using QFSW.QC;
 public class ScoreManager : MonoBehaviour
 {
     public static int score;
+    public GlobalStatistics globalStat;
 
 
     TextMeshProUGUI text;
@@ -14,6 +15,7 @@ public class ScoreManager : MonoBehaviour
 
     void Awake ()
     {
+        globalStat = FindObjectOfType<GlobalStatistics>();
         text = GetComponent<TextMeshProUGUI>();
         LoadScore();
     }
@@ -22,6 +24,7 @@ public class ScoreManager : MonoBehaviour
     void Update ()
     {
         text.text = score.ToString();
+        globalStat.SetCoin(score);
     }
 
     public int getScore()
@@ -37,20 +40,20 @@ public class ScoreManager : MonoBehaviour
     public void SaveScore()
     {
         string username = PlayerPrefs.GetString("playerName", "Player");
-        PlayerPrefs.SetInt(username+"_coin", score);
+        PlayerPrefs.SetInt(username+"_Coin", score);
         PlayerPrefs.Save();
     }
 
     public void LoadScore()
     {
         string username = PlayerPrefs.GetString("playerName", "Player");
-        score = PlayerPrefs.GetInt(username+"_coin", 0);
+        score = PlayerPrefs.GetInt(username+"_Coin", 0);
     }
 
     public void ResetScore()
     {
         string username = PlayerPrefs.GetString("playerName", "Player");
-        PlayerPrefs.SetInt(username + "_coin", 0);
+        PlayerPrefs.SetInt(username + "_Coin", 0);
         score = 0;
     }
 

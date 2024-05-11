@@ -10268,8 +10268,8 @@ MonoBehaviour:
   progress: {fileID: 0}
   nextButton: {fileID: 0}
   saveButton: {fileID: 0}
-  rewardAmount: 100
-  targetKill: 5
+  rewardAmount: 0
+  targetKill: 0
 --- !u!224 &7125166429251741024 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6178400354368998561, guid: 16a2956182d519a48960b6b7bba2c1cf,

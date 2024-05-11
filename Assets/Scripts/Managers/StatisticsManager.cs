@@ -9,6 +9,7 @@ public class StatisticsManager : MonoBehaviour
     private int totalShots;
     private int shotAccuracy;
     private int hurt;
+    private int coin;
     private float distanceTraveled;
     private float playTime;
     private int enemiesKilled;
@@ -53,6 +54,11 @@ public class StatisticsManager : MonoBehaviour
         return time.ToString(@"hh\:mm\:ss");
     }
 
+    public void SetCoin(int coin)
+    {
+        this.coin = coin;
+    }
+
     public void AddPlayTime(float addition)
     {
         playTime += addition;
@@ -87,6 +93,7 @@ public class StatisticsManager : MonoBehaviour
         PlayerPrefs.SetInt(GetPrefKey(username, "EnemiesKilled"), enemiesKilled);
         PlayerPrefs.SetFloat(GetPrefKey(username, "PlayTime"), playTime);
         PlayerPrefs.SetInt(GetPrefKey(username, "Hurt"), hurt);
+        PlayerPrefs.SetInt(GetPrefKey(username, "Coin"), coin);
         PlayerPrefs.Save();
     }
 
@@ -99,10 +106,18 @@ public class StatisticsManager : MonoBehaviour
         enemiesKilled = PlayerPrefs.GetInt(GetPrefKey(username, "EnemiesKilled"), 0);
         playTime = PlayerPrefs.GetFloat(GetPrefKey(username, "PlayTime"), 0f);
         hurt = PlayerPrefs.GetInt(GetPrefKey(username, "Hurt"), 0);
+        coin = PlayerPrefs.GetInt(GetPrefKey(username, "Coin"), 0);
     }
 
     public void ResetStats()
     {
+        totalShots = 0;
+        shotAccuracy = 0;
+        distanceTraveled = 0f;
+        enemiesKilled = 0;
+        playTime = 0f;
+        hurt = 0;
+        coin = 0;
         username = PlayerPrefs.GetString("playerName");
         PlayerPrefs.SetInt(GetPrefKey(username, "TotalShots"), 0);
         PlayerPrefs.SetInt(GetPrefKey(username, "Accuracy"), 0);
@@ -110,12 +125,7 @@ public class StatisticsManager : MonoBehaviour
         PlayerPrefs.SetInt(GetPrefKey(username, "EnemiesKilled"), 0);
         PlayerPrefs.SetFloat(GetPrefKey(username, "PlayTime"), 0f);
         PlayerPrefs.SetInt(GetPrefKey(username, "Hurt"), 0);
-        totalShots = 0;
-        shotAccuracy = 0;
-        distanceTraveled = 0f;
-        enemiesKilled = 0;
-        playTime = 0f;
-        hurt = 0;
+        PlayerPrefs.SetInt(GetPrefKey(username, "Coin"), 0);
     }
 
 }

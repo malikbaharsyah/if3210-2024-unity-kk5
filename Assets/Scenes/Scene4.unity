@@ -10264,7 +10264,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7125166429251741022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da9779f5a93bbaa40b84a22d6f2cef42, type: 3}
+  m_Script: {fileID: 11500000, guid: da882ad624f0af24c8a64a89340440d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
@@ -10274,8 +10274,8 @@ MonoBehaviour:
   progress: {fileID: 0}
   nextButton: {fileID: 0}
   saveButton: {fileID: 0}
-  rewardAmount: 400
-  targetShoot: 20
+  rewardAmount: 500
+  finishTime: 60
 --- !u!23 &7139597421588527058
 MeshRenderer:
   m_ObjectHideFlags: 0

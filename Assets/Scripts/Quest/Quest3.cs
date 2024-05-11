@@ -6,12 +6,13 @@ using TMPro;
 
 public class Quest3 : Quest
 {
-    public float targetDistance = 100f;
+    public float targetDistance;
     
     // Start is called before the first frame update
     void Start()
     {
-        nextScene = "Level";
+        rewardAmount = 100 * difficulty;
+        targetDistance = 100f * difficulty;
         title.text = "Walk around " + targetDistance;
     }
 
