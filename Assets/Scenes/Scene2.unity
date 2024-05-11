@@ -6973,7 +6973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c54123cfffe546add0475766dd23c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearTime: 3
+  disappearTime: 10
   shopKeeperObject: {fileID: 7503283008911253791}
   player: {fileID: 0}
   shopKeeper: {fileID: 0}
@@ -10241,7 +10241,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1328508609773761051, guid: 16a2956182d519a48960b6b7bba2c1cf,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7125166429251741023}
+      addedObject: {fileID: 7125166429251741025}
   m_SourcePrefab: {fileID: 100100000, guid: 16a2956182d519a48960b6b7bba2c1cf, type: 3}
 --- !u!1 &7125166429251741022 stripped
 GameObject:
@@ -10249,7 +10249,13 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7125166429251741021}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7125166429251741023
+--- !u!224 &7125166429251741024 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6178400354368998561, guid: 16a2956182d519a48960b6b7bba2c1cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 7125166429251741021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7125166429251741025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10258,24 +10264,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 7125166429251741022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e145d22d413b243a3969ed2e18324a, type: 3}
+  m_Script: {fileID: 11500000, guid: da9779f5a93bbaa40b84a22d6f2cef42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  nextScene: Pet
+  nextScene: Scene3
   statMg: {fileID: 0}
   title: {fileID: 0}
   progress: {fileID: 0}
   nextButton: {fileID: 0}
   saveButton: {fileID: 0}
-  rewardAmount: 0
-  targetKill: 5
---- !u!224 &7125166429251741024 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6178400354368998561, guid: 16a2956182d519a48960b6b7bba2c1cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 7125166429251741021}
-  m_PrefabAsset: {fileID: 0}
+  rewardAmount: 200
+  targetShoot: 20
 --- !u!23 &7139597421588527058
 MeshRenderer:
   m_ObjectHideFlags: 0

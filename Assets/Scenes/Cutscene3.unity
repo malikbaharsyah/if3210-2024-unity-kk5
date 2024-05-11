@@ -468,7 +468,7 @@ MonoBehaviour:
   - 'Berani-beraninya musnahin kacung gweh '
   - Rasakan kemurnian bearbr*nd
   index: 0
-  nextScene: 
+  nextScene: Scene4
   playerImage: {fileID: 641799541}
   shopkeeperImage: {fileID: 93759024}
   boosImage: {fileID: 304352362}

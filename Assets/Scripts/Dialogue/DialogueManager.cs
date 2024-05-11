@@ -29,7 +29,6 @@ public class DialogueManager : MonoBehaviour
     {
         if (Input.GetButton("Fire1") && dialoguePanel.activeInHierarchy)
         {
-            UnityEngine.Debug.Log(index);
             if (dialogueText.text == sentences[index])
             {
                 NextSentence();

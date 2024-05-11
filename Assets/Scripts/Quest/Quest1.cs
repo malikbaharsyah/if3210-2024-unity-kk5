@@ -3,7 +3,7 @@ using TMPro;
 
 public class Quest1 : Quest
 {
-    public float finishTime = 5f;
+    public float finishTime = 60f;
     private float timer;
 
     void Start()

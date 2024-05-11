@@ -11,24 +11,46 @@ public class SaveController : MonoBehaviour
     public Text playTime1;
     public Text playTime2;
     public Text playTime3;
+    public GlobalStatistics globalStats;
+    //public ScoreManager scoreMg;
     void Start()
     {
+        //scoreMg = FindObjectOfType<ScoreManager>();
+        globalStats = FindObjectOfType<GlobalStatistics>();
         UpdateSaveSlots();
     }
 
     public void SaveGameButton1()
     {
-        
+        string username = PlayerPrefs.GetString("playerName");
+        //scoreMg.SaveScore();
+        PlayerPrefs.SetString("saveGame1", username);
+        string playTime = globalStats.GetPlayTime();
+        PlayerPrefs.SetString("playTime1", playTime);
+        saveGame1.text = username;
+        playTime1.text = playTime;
     }
 
     public void SaveGameButton2()
     {
-        
+        string username = PlayerPrefs.GetString("playerName");
+        //scoreMg.SaveScore();
+        PlayerPrefs.SetString("saveGame2", username);
+        string playTime = globalStats.GetPlayTime();
+        PlayerPrefs.SetString("playTime2", playTime);
+        saveGame2.text = username;
+        playTime2.text = playTime;
     }
 
     public void SaveGameButton3()
     {
-        
+        string username = PlayerPrefs.GetString("playerName");
+        //scoreMg.SaveScore();
+        PlayerPrefs.SetString("saveGame3", username);
+        string playTime = globalStats.GetPlayTime();
+        PlayerPrefs.SetString("playTime3", playTime);
+        saveGame3.text = username;
+        playTime3.text = playTime;
     }
 
     public void UpdateSaveSlots()

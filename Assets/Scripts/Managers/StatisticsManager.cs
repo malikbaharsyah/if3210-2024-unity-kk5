@@ -101,4 +101,21 @@ public class StatisticsManager : MonoBehaviour
         hurt = PlayerPrefs.GetInt(GetPrefKey(username, "Hurt"), 0);
     }
 
+    public void ResetStats()
+    {
+        username = PlayerPrefs.GetString("playerName");
+        PlayerPrefs.SetInt(GetPrefKey(username, "TotalShots"), 0);
+        PlayerPrefs.SetInt(GetPrefKey(username, "Accuracy"), 0);
+        PlayerPrefs.SetFloat(GetPrefKey(username, "DistanceTraveled"), 0f);
+        PlayerPrefs.SetInt(GetPrefKey(username, "EnemiesKilled"), 0);
+        PlayerPrefs.SetFloat(GetPrefKey(username, "PlayTime"), 0f);
+        PlayerPrefs.SetInt(GetPrefKey(username, "Hurt"), 0);
+        totalShots = 0;
+        shotAccuracy = 0;
+        distanceTraveled = 0f;
+        enemiesKilled = 0;
+        playTime = 0f;
+        hurt = 0;
+    }
+
 }

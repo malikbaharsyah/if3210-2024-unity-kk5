@@ -468,7 +468,7 @@ MonoBehaviour:
   - 'Aku masuk isekai? '
   - 'Kalo ini anime, semoga bukan bikinan bang Hajime Isayama aja deh.. '
   index: 0
-  nextScene: Pet
+  nextScene: Scene1
   playerImage: {fileID: 641799541}
   shopkeeperImage: {fileID: 93759024}
   boosImage: {fileID: 304352362}

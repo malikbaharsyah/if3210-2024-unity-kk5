@@ -9,7 +9,7 @@ using TMPro;
 public class MainMenuController : MonoBehaviour {
 
     Animator anim;
-
+    //public ScoreManager scoreMg;
     public int newGameScene;
     // public int quickSaveSlotID;
 
@@ -46,7 +46,7 @@ public class MainMenuController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         anim = GetComponent<Animator>();
-
+        //scoreMg = FindObjectOfType<ScoreManager>();
         //new key
         // PlayerPrefs.SetInt("quickSaveSlot", quickSaveSlotID);
         if (!PlayerPrefs.HasKey("playerName")) {
@@ -168,6 +168,9 @@ public class MainMenuController : MonoBehaviour {
     public void newGame()
     {
         newGameScene = SceneManager.GetActiveScene().buildIndex + 1;
+        string username = PlayerPrefs.GetString("playerName");
+        //scoreMg.ResetScore();
+        globalStats.ResetStats();
         SceneManager.LoadScene(newGameScene);
     }
 
@@ -236,15 +239,30 @@ public class MainMenuController : MonoBehaviour {
 
     public void LoadGame1()
     {
-        
+        string username = PlayerPrefs.GetString("saveGame1");
+        PlayerPrefs.SetString("playerName", username);
+        globalStats.LoadPlayerStats();
+        string scene = PlayerPrefs.GetString(username+"_scene", "Cutscene1");
+        //scoreMg.LoadScore();
+        SceneManager.LoadScene(scene);
     }
     public void LoadGame2()
     {
-        
+        string username = PlayerPrefs.GetString("saveGame2");
+        PlayerPrefs.SetString("playerName", username);
+        globalStats.LoadPlayerStats();
+        string scene = PlayerPrefs.GetString(username + "_scene", "Cutscene1");
+        //scoreMg.LoadScore();
+        SceneManager.LoadScene(scene);
     }
     public void LoadGame3()
     {
-        
+        string username = PlayerPrefs.GetString("saveGame3");
+        PlayerPrefs.SetString("playerName", username);
+        globalStats.LoadPlayerStats();
+        string scene = PlayerPrefs.GetString(username + "_scene", "Cutscene1");
+        //scoreMg.LoadScore();
+        SceneManager.LoadScene(scene);
     }
     public void UpdateLoadSlots()
     {

@@ -471,7 +471,7 @@ MonoBehaviour:
   - 'Aaa.. kasian aa.. '
   - 'Apaan tuh? '
   index: 0
-  nextScene: 
+  nextScene: Scene2
   playerImage: {fileID: 641799541}
   shopkeeperImage: {fileID: 93759024}
   boosImage: {fileID: 304352362}

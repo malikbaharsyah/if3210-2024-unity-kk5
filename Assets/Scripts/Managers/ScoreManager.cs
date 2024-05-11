@@ -47,6 +47,13 @@ public class ScoreManager : MonoBehaviour
         score = PlayerPrefs.GetInt(username+"_coin", 0);
     }
 
+    public void ResetScore()
+    {
+        string username = PlayerPrefs.GetString("playerName", "Player");
+        PlayerPrefs.SetInt(username + "_coin", 0);
+        score = 0;
+    }
+
     [Command("motherlode")]
     private void Motherlode()
     {

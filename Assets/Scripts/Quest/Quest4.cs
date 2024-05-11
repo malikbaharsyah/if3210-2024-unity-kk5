@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Quest4 : Quest
 {
-    public int targetShoot = 10;
+    public int targetShoot = 20;
 
     // Start is called before the first frame update
     void Start()
