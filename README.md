@@ -48,7 +48,7 @@ Aplikasi ini dibangun dengan menggunakan Unity.
     <th>NIM</th>
     <th>Nama</th>
     <th>Tugas</th>
-    <th>Dedikasi Waktu</th>
+    <th>Waktu Kerja</th>
   </tr>
   <tr>
     <td>13521010</td>
