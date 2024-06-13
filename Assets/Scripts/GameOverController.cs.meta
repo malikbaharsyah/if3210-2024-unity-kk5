@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 4dfd581be7ca543fdb9440f9a0665e96
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MainOptionsPanel: {instanceID: 0}
+  - StartGameOptionsPanel: {instanceID: 0}
+  - GamePanel: {instanceID: 0}
+  - ControlsPanel: {instanceID: 0}
+  - GfxPanel: {instanceID: 0}
+  - LoadGamePanel: {instanceID: 0}
+  - musicVol: {instanceID: 0}
+  - sfxVol: {instanceID: 0}
+  - masterMixer: {fileID: 24100000, guid: 5b84db49d40ea449aa4f3e3bd229ab5b, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

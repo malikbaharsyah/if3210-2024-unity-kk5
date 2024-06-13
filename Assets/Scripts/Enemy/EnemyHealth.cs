@@ -7,18 +7,22 @@ public class EnemyHealth : MonoBehaviour
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
+    public GlobalStatistics statMg;
+    public LocalStatistics locStatMg;
 
+    protected Animator anim;
+    protected AudioSource enemyAudio;
+    protected ParticleSystem hitParticles;
+    protected CapsuleCollider capsuleCollider;
+    protected bool isDead;
+    protected bool isSinking;
 
-    Animator anim;
-    AudioSource enemyAudio;
-    ParticleSystem hitParticles;
-    CapsuleCollider capsuleCollider;
-    bool isDead;
-    bool isSinking;
-
+    public GameObject[] orbPrefabs;
 
     void Awake()
     {
+        statMg = FindObjectOfType<GlobalStatistics>();
+        locStatMg = FindObjectOfType<LocalStatistics>();
         // Mendapatkan reference component
         anim = GetComponent<Animator>();
         enemyAudio = GetComponent<AudioSource>();
@@ -54,12 +58,29 @@ public class EnemyHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            statMg.RecordEnemyKilled();
+            locStatMg.RecordEnemyKilled();
+            Death();
+        }
+    }
+
+    public void TakeDamageSword(int amount)
+    {
+        if (isDead)
+            return;
+
+        enemyAudio.Play();
+
+        currentHealth -= amount;
+
+        if (currentHealth <= 0)
+        {
             Death();
         }
     }
 
 
-    void Death()
+    protected virtual void Death()
     {
         isDead = true;
 
@@ -69,6 +90,7 @@ public class EnemyHealth : MonoBehaviour
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
+        SpawnOrb();
     }
 
 
@@ -82,5 +104,13 @@ public class EnemyHealth : MonoBehaviour
         isSinking = true;
         ScoreManager.score += scoreValue;
         Destroy(gameObject, 2f);
+    }
+
+    public void SpawnOrb()
+    {
+        int randomIndex = Random.Range(0, orbPrefabs.Length);
+        // postion collider y 0.35 agar diatas tanah
+        GameObject orb = Instantiate(orbPrefabs[randomIndex], new Vector3(transform.position.x, 0.35f, transform.position.z), Quaternion.identity);
+        orb.transform.SetParent(transform.parent);
     }
 }
